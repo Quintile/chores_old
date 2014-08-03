@@ -1,0 +1,85 @@
+"id","name","description","room_id","duration","lastdone","frequency","importance","user_id","assignedDate"
+"8","Tidy The Room","Put stuff where it belongs, get rid of clutter, and return things back to where they should be.","7","2","2014-07-27 00:00:00","4","1",NULL,NULL
+"9","Clean Coffee Table","Wipe the glass of the coffee table, and lift the glass and clean the crumbs out of the rim. Also tighten the nuts on the legs to ensure the table doesn't collapse.","7","2","2014-07-27 00:00:00","7","1",NULL,NULL
+"10","Dust Media Center","Dust the TV and move the consoles and dust around them.","7","2","2014-07-27 00:00:00","7","1",NULL,NULL
+"11","Vacuum","Vacuum both rugs, and empty out the vacuum once done.","7","5","2014-07-13 00:00:00","7","3",NULL,NULL
+"12","Wash The Backdoor","Clean the glass on the back door and windows using Windex.","7","2","2014-06-09 00:00:00","14","1","1","2014-07-01 00:00:00"
+"13","Dishes","Do all the dishes and also put away all the dishes once done. Included in this chore is sanitizing and wiping down all counter tops and the stove top.","8","15","2014-07-27 00:00:00","1","3",NULL,NULL
+"14","Clean Out The Fridge","Go through leftovers, produce and containers and throw out what isn't good, or won't be used anymore. Reorganize the shelves so that they're better laid out and easier to see what we have.","8","5","2014-07-06 00:00:00","7","3",NULL,NULL
+"15","Vacuum","Vacuum the carpet under the dining room table.","9","1","2014-07-13 00:00:00","7","2",NULL,NULL
+"16","Tidy The Room","Pick up random crap off the table and put it where it belongs. Ensure there is no build up of stuff on top of the pantry, or on top of the wine rack, or on the ground.","9","2","2014-07-27 00:00:00","4","1",NULL,NULL
+"17","Organize The Pantry","Clean out and organize the pantry, even if that's just rearranging things to have the layout make more sense.","9","5","2014-07-06 00:00:00","7","1",NULL,NULL
+"18","Clean Dishrack","Use vim or some other powerful cleaner to clean the bottom of the dish rack, including unscrewing the drip tray with a screw-driver, and cleaning the unimaginable gunk out of that thing.","8","5","2014-07-27 00:00:00","14","2",NULL,NULL
+"19","Clean Drawers","Clean out the crumbs from the drawers.","8","10","2014-06-21 00:00:00","30","2",NULL,NULL
+"20","Vacuum","Just vacuum the little mat in front of the sink.","8","1","2014-07-13 00:00:00","14","1",NULL,NULL
+"21","Clean The Coffee Pot","Use your hand and get right in there to clean out the coffee pot.","8","5","2014-07-27 00:00:00","30","1",NULL,NULL
+"22","Organize The Containers","Organize the containers into same size piles, and organize the lids in a way that makes sense.","8","5","2014-07-27 00:00:00","14","1",NULL,NULL
+"23","Clean Garbage Can","Take the bag out to the garbage outside, and then use cleaner (vim or whatever) and clean the inside of the garbage, including the underside of the lid.","8","5","2014-06-29 00:00:00","14","3",NULL,NULL
+"24","Wipe Walls and Cupboards","Clean the walls and cupboard doors to remove any food, finger prints, blood splatter, etc.","8","10","2014-07-01 00:00:00","14","2",NULL,NULL
+"25","Kitty Litter","Scoop the motha fuckin' kitty litter.","10","5","2014-07-13 00:00:00","1","3","2","2014-07-13 00:00:00"
+"26","Clean Mirror","Clean the mirror using windex and a clean cloth (preferrably a cleaning cloth and not paper towel).","5","2","2014-07-27 00:00:00","7","3",NULL,NULL
+"27","Clean Toilet","Clean the inside of the bowl with the brush and comet cleaning, clean the seat, and lid. Clean the outside of the bowl, including dusting and wiping the base of the toilet.","5","5","2014-07-27 00:00:00","7","3",NULL,NULL
+"28","Empty Garbage","Empty the garbage into a bag and bring the bag out to the garbage pale outside.","5","1","2014-07-27 00:00:00","4","2",NULL,NULL
+"29","Clean Sink","Clean the sink and surrounding counter. Tidy up the counter by moving unused items to the closet, and organize them in a way that makes sense.","5","5","2014-07-27 00:00:00","7","3",NULL,NULL
+"30","Fill The Soap","Fill the soap dispenser up, even if it's not empty. Just do it.","5","1","2014-06-29 00:00:00","30","1",NULL,NULL
+"31","Wash The Bath Mats","Do a load of laundry containing the bath mats. Do not mark this chore as complete until they're dry and back on the floor.","5","2","2014-06-29 00:00:00","30","2",NULL,NULL
+"32","Clean Mirror","Clean the mirror using windex and a clean cloth (preferrably a cleaning cloth and not paper towel).","6","1","2014-07-27 00:00:00","14","1",NULL,NULL
+"33","Clean Toilet","Clean the inside of the bowl with the brush and comet cleaning, clean the seat, and lid. Clean the outside of the bowl, including dusting and wiping the base of the toilet.","6","4","2014-07-27 00:00:00","7","3",NULL,NULL
+"34","Empty Garbage","Empty the garbage into a bag and bring the bag out to the garbage pale outside.","6","1","2014-07-27 00:00:00","30","2",NULL,NULL
+"35","Clean Sink","Clean the sink, including the tap and around the tap.","6","2","2014-07-27 00:00:00","14","2",NULL,NULL
+"36","Shake Out Floor Mat","Take the floor mat outside (backyard) and just shake the shit out of it. Alternatively you can vacuum it but I think that's more difficult.","6","2","2014-06-29 00:00:00","30","2",NULL,NULL
+"37","Tidy The Room","Pick up clothes and either put them away or put them in the laundry. Tidy the bedside tables and put away anything that doesn't need to be there. Make sure the ironing board is essentially clear of random stuff.","1","5","2014-07-27 00:00:00","4","1",NULL,NULL
+"38","Make The Bed","Make the bed, fluff the pillows, make it look nice and comfortable.","1","5","2014-07-27 00:00:00","4","1",NULL,NULL
+"39","Wash The Bedding","Wash all the sheets, the pillow cases and the duvet cover.","1","5","2014-06-29 00:00:00","14","2",NULL,NULL
+"40","Vacuum","Vacuum the room.","1","5","2014-07-13 00:00:00","7","3",NULL,NULL
+"41","Do The Laundry","Do the laundry, regardless of how many loads that takes. Do not mark this chore as complete until the clothes have been dried, and put away!","1","5","2014-07-27 00:00:00","4","3",NULL,NULL
+"43","Tidy The Room","Clean up all the clutter, put things back where they belong.","11","5","2014-06-29 00:00:00","4","1",NULL,NULL
+"44","Vacuum","Vacuum the carpet in the room.","11","5","2014-07-13 00:00:00","7","3",NULL,NULL
+"45","Empty Garbage","Empty both the garbages in the room and bring them outside to the garbage.","11","2","2014-07-27 00:00:00","7","1",NULL,NULL
+"46","Wipe Computer Desks","Dust and wipe down the computer desk tops. Just use the all purpose cleaning spray, but not too much. ","11","5","2014-06-21 00:00:00","14","1",NULL,NULL
+"47","Organize The Linen Closet","Rearrange and organize the closet so that the towels are arranged well, the medicine and toiletries we have are grouped and organized in a way that makes sense.","5","10","2014-07-27 00:00:00","30","2",NULL,NULL
+"48","Empty Garbage","Empty the garbage we use to put all the dryer lint into.","10","1","2014-07-13 00:00:00","30","1",NULL,NULL
+"49","Clean Washer and Dryer","Wipe down and clean the outside (mostly) of the washer and dryer. The washer builds up a lot of dust and crap on the top controls part, and inside the lid can get gross.","10","10","2014-06-09 00:00:00","30","2",NULL,NULL
+"50","Dust Wine Bottles","Dust the wine bottles on display (carefully) and ensure they look fantastic!","9","5","2014-07-27 00:00:00","14","1",NULL,NULL
+"51","Vacuum Hallway Runner","The carpet in front of the bathroom and basement door needs to be vacuumed from time to time.","7","3","2014-07-13 00:00:00","7","1",NULL,NULL
+"52","Vacuum Stairs","Vacuum each stair, as the hair and dust buildup is insane.","12","10","2014-07-13 00:00:00","7","3",NULL,NULL
+"53","Vacuum","Vacuum the carpet.","3","5","2014-07-13 00:00:00","30","3",NULL,NULL
+"54","Fill The Soap","Fill the soap dispenser even if it's not empty. Just top it up.","6","1","2014-07-01 00:00:00","30","1",NULL,NULL
+"55","Wash Bathtub","Wash the bathtub and the bathtub walls, getting all the soap scum off. It's actually one of the tougher chores and kinda sucks.","5","15","2014-07-27 00:00:00","7","3",NULL,NULL
+"56","Tidy Bookshelf","Ensure the books are on the right shelf, there isn't too many loose papers, and move things if they don't need to be there.","11","5","2014-07-27 00:00:00","14","1",NULL,NULL
+"57","Shred Documents","Shred the documents and throw them out.","11","5","2014-06-29 00:00:00","30","1",NULL,NULL
+"58","Organize Filing Cabinet","Go through and throw out out-dated documents, and ensure papers are in the right section.","11","10","2014-06-29 00:00:00","30","1",NULL,NULL
+"59","Tidy The Room","Make sure there isn't crap on the floor, fix the pillows on the loveseat, make sure it looks neat and tidy in there.","3","3","2014-07-27 00:00:00","30","3",NULL,NULL
+"60","Tidy Bookshelf","Make sure the books are put back in a nice way, no books stacked randomly on the shelves.","3","3","2014-07-27 00:00:00","30","1",NULL,NULL
+"61","Sweep & Mop Floor","Sweep and then mop the hallway floor upstairs. God knows how much dog poo has touched that floor but is invisible.","12","5","2014-06-29 00:00:00","30","2",NULL,NULL
+"62","Wipe Cobwebs From Ceiling","Just use a broom and sweep the ceiling basically.","12","2","2014-04-21 00:00:00","30","1","1","2014-07-01 00:00:00"
+"63","Mop Floor","Mop the floor, and especially get around and behind the toilet.","5","5","2014-06-29 00:00:00","30","3",NULL,NULL
+"64","Wash Towels","Wash all the towels in the house (that need washing). Don't mark this chore as finished until the towels are dry and hanging back where they belong.","5","5","2014-07-27 00:00:00","7","3",NULL,NULL
+"65","Organize Under The Sink","Ensure that it's organized and neat under the sink where the cleaning products are kept, as well as toilet paper and some toiletries.","5","5","2014-07-27 00:00:00","7","1",NULL,NULL
+"66","Mop Floor","Mop the floor, especially around the toilet (and behind it).","6","5","2014-06-29 00:00:00","30","3",NULL,NULL
+"67","Dust","Dust the bed headboard, and clean the top of the dresser (and if there is anything else worth dusting).","1","5","2014-07-27 00:00:00","7","2",NULL,NULL
+"68","Clean Ceiling Fan","Annoying but should be done. Use a dry cloth to wipe the dust off, and then use a damp cloth to clean the fan blades.","1","5","2014-07-27 00:00:00","30","1",NULL,NULL
+"69","Clean Windows","Clean the bedroom windows using windex.","1","5","2014-07-27 00:00:00","30","2",NULL,NULL
+"70","Fill Pet Food & Water","Fill the cat's dry food and water, and fill the dog's water.","12","2","2014-07-27 00:00:00","2","3",NULL,NULL
+"72","Feed The Pets","After dinner, you are responsible for feeding the dog and cats wet food! YUM!","12","0","2014-07-27 00:00:00","1","3",NULL,NULL
+"73","Mop Floor","Mop the floor of the room, plus in front of the front door.","9","10","2014-06-29 00:00:00","30","2",NULL,NULL
+"74","Clean Lamp","Dust and clean the lamp and lamp shade that's on the dining room table.","9","5","2014-07-27 00:00:00","14","1",NULL,NULL
+"75","Mop Floor","Mop the kitchen floor.","8","5","2014-06-29 00:00:00","30","3",NULL,NULL
+"76","Clean Out The Freezer","Move stuff around, throw out really old meat, rearrange stuff so that it's easier to see things.","8","5","2014-07-06 00:00:00","7","2",NULL,NULL
+"77","Organize All Lower Cupboards","Organize the lower cupboards, including the pots cupboard, where the dog food is, and under the sink.","8","10","2014-06-24 00:00:00","14","2",NULL,NULL
+"78","Organize All Food Cupboards","Organize the upper cupboards, including the spice and pasta cupboards, all of the food cupboards.","8","10","2014-06-29 00:00:00","14","3",NULL,NULL
+"79","Clean Top of Fridge","Clean the top of the fridge, move stuff out of the way, and ensure it's clean and organized.","8","5","2014-06-24 00:00:00","14","2",NULL,NULL
+"80","Clean Top of Game Cabinet","Clean up the clutter that forms on top of the games cabinet. Only guitar/banjo accessories and dog accessories should really be up there.","7","5","2014-07-27 00:00:00","7","2",NULL,NULL
+"81","Clean Side Table","Clean the glass, dust the wood, and ensure the legs are tight.","7","3","2014-07-27 00:00:00","7","3",NULL,NULL
+"82","Throw Out Junk","Challenge yourself to go down into the basement and select 3 objects to throw out. Objects you haven't used in the last 12 months. Can be anything.","10","5","2014-07-27 00:00:00","7","1",NULL,NULL
+"86","Fill Pet Food Containers","Fill the cat and dog dry food buckets/containers.","8","5","2014-06-24 00:00:00","14","2",NULL,NULL
+"87","Bring Out Recycling","Take the recycling bin from underneath the kitchen sink and sort it into the appropriate bins outside.","8","1","2014-07-27 00:00:00","1","2",NULL,NULL
+"88","Wash Kitchen Sink","Use a heavy cleaner, like Vim to really scrub the wink. They tend to smell after awhile, and considering we put our dishes in there, it's important that we clean it.","8","5","2014-07-27 00:00:00","7","3",NULL,NULL
+"89","Vacuum Entry Way Mat","Vacuum the front door mat.","12","2","2014-07-13 00:00:00","7","3",NULL,NULL
+"90","Wash The Window","Just spray and wipe the dining room window. In the warmer months, wipe the outside too.","9","5","2014-07-27 00:00:00","30","2",NULL,NULL
+"91","Wash Out Recycling Bin","Clean out the recycling bin that sits under the sink.","8","5","2014-07-27 00:00:00","14","2",NULL,NULL
+"92","Clear Backyard of Poo","Make sure the backyard has zero poo in it. ZERO.","13","5","2014-07-27 00:00:00","7","2",NULL,NULL
+"93","Clean The BBQ","Degrease and/or wipe down the BBQ so it's nice and shiny, and it wouldn't be the worst thing in the world if food or food utensils touched the surfaces.","13","10",NULL,"30","2",NULL,NULL
+"94","Sweep For Sticks","Go through the backyard and look for sticks that Ashe might chew. Collect them up as best you can and get rid of them.","13","10",NULL,"30","1",NULL,NULL
+"95","Clean The Deep Fryer","Drain the oil, degrease/wash all parts.","13","10","2014-07-01 00:00:00","30","2",NULL,NULL
+"96","Vacuum/Sweep Stairs","Vacuum or Sweep the stairs to the basement. They're nasty. While you're at it, vacuum/sweep up the bits of Styrofoam that stupid retard cats created.","10","5","2014-07-01 00:00:00","30","2",NULL,NULL
