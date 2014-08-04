@@ -4,6 +4,22 @@
 	margin: 0 auto;
 }
 
-div.danger {
+.chores .danger {
 	background: #f2dede;
+}
+
+.chores .warning {
+	background: #fcf8e3;
+}
+
+.btn {
+	padding: 2px 4px;
+}
+
+.chores td {
+	vertical-align: middle !important;
+}
+
+.chore {
+	cursor: pointer;
 }

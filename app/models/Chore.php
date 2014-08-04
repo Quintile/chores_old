@@ -44,4 +44,31 @@ class Chore extends \Eloquent
 
 		return null;
 	}
+
+	public function frequencyString()
+	{
+		switch($this->frequency)
+		{
+			case 1:
+				return "Daily";
+
+			case 2:
+				return "Every Other Day";
+
+			case 4:
+				return "Twice A Week";
+
+			case 7:
+				return "Weekly";
+
+			case 14:
+				return "Bi-Weekly";
+
+			case 30:
+				return "Monthly";
+
+			default:
+				return $this->frequency;
+		}
+	}
 }
