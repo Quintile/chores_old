@@ -1,0 +1,9 @@
+.urgency {
+	width: 16px;
+	height: 16px;
+	margin: 0 auto;
+}
+
+div.danger {
+	background: #f2dede;
+}
