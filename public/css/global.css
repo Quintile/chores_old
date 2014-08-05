@@ -1,7 +1,11 @@
-.urgency {
+a.urgency {
 	width: 16px;
 	height: 16px;
 	margin: 0 auto;
+}
+
+td.urgency {
+	width: 16px;
 }
 
 .chores .danger {
@@ -22,4 +26,10 @@
 
 .chore {
 	cursor: pointer;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+    .desktop-only {
+    	display: none !important;
+    }
 }

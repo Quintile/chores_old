@@ -21,6 +21,16 @@ class Chore extends \Eloquent
 		return $diff;
 	}
 
+	public function daysString()
+	{
+		if(is_null($this->days()))
+			return "Never";
+		elseif($this->days() > 0)
+			return $this->days()." Days";
+		elseif($this->days() == '0')
+			return "Today";
+	}
+
 	public function priority()
 	{
 		if(is_null($this->days()))
