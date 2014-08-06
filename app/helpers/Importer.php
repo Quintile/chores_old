@@ -20,6 +20,7 @@ class Importer {
 				
 				$obj = new $class();
 				foreach($columns as $key){
+					
 					$ignoreProp = false;
 
 					$value = $row[array_search($key, $columns)];

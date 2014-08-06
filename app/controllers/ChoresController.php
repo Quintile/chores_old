@@ -12,10 +12,22 @@ class ChoreController extends \BaseController
 
 	public function take($id)
 	{
-		$chore = \Models\Chore::find($id);
-		$chore->lastdone = new \DateTime();
-		$chore->save();
+		$today = new \DateTime();
+		$today = $today->format('Y-m-d');
 
+		$exists = \Models\Log::where('chore_id', $id)->
+								where('created_at', 'LIKE', $today.'%')->
+								first();
+		if($exists)
+		{
+			$exists->delete();
+		}
+		else
+		{
+			$log = new \Models\Log($id, 1);
+			$log->save();
+		}
+		
 		return \Redirect::back();
 	}
 }

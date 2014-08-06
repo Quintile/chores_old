@@ -14,7 +14,7 @@
 		<tbody>
 			@foreach($chores as $c)
 			<tr class="chore 
-				@if($c->days() == 0)
+				@if($c->days() == '0')
 					success
 				@endif" 
 				data-href="{{\URL::route('chores.take', $c->id)}}">

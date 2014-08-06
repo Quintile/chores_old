@@ -39,7 +39,7 @@ class import extends Command {
 	{
 		$chores = public_path().'/csv/chores.csv';
 		//dd($chores);
-		$result = \Helpers\Importer::Import('\Models\Chore', $chores, array('assignedDate'));
+		$result = \Helpers\Importer::Import('\Models\Chore', $chores, array('assignedDate', 'lastdone'));
 		if(\Helpers\Importer::$error)
 		{
 			$this->error(\Helpers\Importer::$error);

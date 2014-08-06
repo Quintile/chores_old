@@ -19,7 +19,6 @@ class CreateChoresTable extends Migration {
 			$table->string("name");
 			$table->text("description")->nullable();
 			$table->integer("duration");
-			$table->timestamp('lastdone')->nullable();
 			$table->integer('frequency');
 			$table->integer('importance');
 			$table->integer('user_id')->nullable();

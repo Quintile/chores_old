@@ -6,19 +6,40 @@ class Chore extends \Eloquent
 {
 	protected $guarded = array();
 
+	public $lastdone;
+
+	public function __construct()
+	{
+		$this->lastdone = $this->lastDone();
+	}
+
 	public function room()
 	{
 		return $this->belongsTo('\Models\Room');
 	}
 
+	public function logs()
+	{
+		return $this->hasMany('\Models\Log');
+	}
+
 	public function days()
 	{
-		if(is_null($this->lastdone))
+		if(is_null($this->lastDone()))
 			return null;
 
 		$now = new \DateTime();
-		$diff = $now->diff(new \DateTime($this->lastdone))->format("%a");
+		$diff = $now->diff(new \DateTime($this->lastDone()))->format("%a");
 		return $diff;
+	}
+
+	private function lastDone()
+	{
+		$log = \Models\Log::where('chore_id', $this->id)->
+							orderBy('created_at', 'DESC')->
+							first();
+		return ($log) ? $log->created_at : null;
+
 	}
 
 	public function daysString()
