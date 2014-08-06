@@ -9,11 +9,15 @@ td.urgency {
 }
 
 .chores .danger {
-	background: #f2dede;
+	background: #d9534f;
 }
 
 .chores .warning {
-	background: #fcf8e3;
+	background: #f0ad4e;
+}
+
+.chores .success {
+	background: #5cb85c;
 }
 
 .btn {

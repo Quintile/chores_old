@@ -13,7 +13,11 @@
 		</thead>
 		<tbody>
 			@foreach($chores as $c)
-			<tr class="chore" data-href="{{\URL::route('chores.take', $c->id)}}">
+			<tr class="chore 
+				@if($c->days() == 0)
+					success
+				@endif" 
+				data-href="{{\URL::route('chores.take', $c->id)}}">
 				<td class="urgency">
 					<a class="{{$c->urgency()}} urgency btn disabled"></a>
 				</td>
@@ -29,6 +33,7 @@
 	<script type="text/javascript">
 
 		$(document).ready(function(){
+
 			$("tr[data-href]").click(function(){
 				window.location.href = $(this).attr('data-href');
 			});
