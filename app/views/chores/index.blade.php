@@ -6,9 +6,9 @@
 			<tr>
 				<th></th>
 				<th>Chore</th>
-				<th>Room</th>
-				<th>Frequency</th>
-				<th>Last Done</th>
+				<th class="desktop-only">Room</th>
+				<th class="desktop-only">Frequency</th>
+				<th class="desktop-only">Last Done</th>
 			</tr>
 		</thead>
 		<tbody>
