@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'exchores',
 			'username'  => 'root',
-			'password'  => 'G3IujRwj',
+			'password'  => 'admin',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
