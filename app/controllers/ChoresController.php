@@ -6,7 +6,7 @@ class ChoreController extends \BaseController
 {
 	public function index()
 	{
-		$chores = \Models\Chore::all();
+		$chores = \Models\Chore::orderBy('room_id')->orderBy('name')->get();
 		return \View::make('chores.index', compact('chores'));
 	}
 

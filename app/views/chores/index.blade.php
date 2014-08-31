@@ -12,7 +12,21 @@
 			</tr>
 		</thead>
 		<tbody>
+			<?php $room = null; $count = 0; ?>
 			@foreach($chores as $c)
+
+			@if($count == 0)
+				<div class="panel panel-default">
+					<div class="panel-heading">{{$c->room->name}}</div>
+					<div class="panel-body">
+			@endif
+
+			@if($count++ > 0 && $c->room->name != $room)
+				</div></div>
+				<div class="panel panel-default">
+					<div class="panel-heading">{{$c->room->name}}</div>
+					<div class="panel-body">
+			@endif
 			<tr class="chore 
 				@if($c->days() == '0')
 					success
@@ -26,7 +40,9 @@
 				<td class="desktop-only">{{$c->frequencyString()}}</td>
 				<td class="desktop-only">{{$c->daysString()}}</td>
 			</tr>
+			<?php $room = $c->room->name; ?>
 			@endforeach
+			</div></div>
 		</tbody>
 	</table>
 
