@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('Jordans-MacBook-Air.local'),
+	'local' => array('Jordans-MacBook-Air.local', 'Jordan-PC'),
 
 ));
 

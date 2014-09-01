@@ -9,18 +9,56 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'users';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public static $rules = [
+		'email' => 'required|email|unique:users,email',
+		'password' => 'required',
+		'name' => 'required'
+	];
+
+	public $errors;
+
+	public function isValid()
+	{
+		$validation = \Validator::make($this->attributes, self::$rules);
+
+		if($validation->passes())
+			return true;
+		$this->errors = $validation->messages();
+		return false;
+	}
+
+	public function households()
+	{
+		return $this->belongsToMany('Household');
+	}
+
+	public function invites()
+	{
+		return $this->hasMany('Invite');
+	}
+
+	public function hasUnreadInvites()
+	{
+		$invites = $this->invites()->where('read', false)->where('remind', '<=', with(new DateTime())->format('Y-m-d H:i:s'))->count();
+		if(!$invites)
+			return $this->invites()->where('read', false)->whereNull('remind')->count();
+	}
+
+	public function unreadInvites()
+	{
+		return $this->invites()->where('read', false)->get();
+	}
+
+	public function markInvitesRead()
+	{
+		foreach($this->invites as $i)
+		{
+			$i->read = true;
+			$i->save();
+		}
+	}
 }

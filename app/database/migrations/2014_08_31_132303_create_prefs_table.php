@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ImportOldDb extends Migration {
+class CreatePrefsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,13 @@ class ImportOldDb extends Migration {
 	 */
 	public function up()
 	{
-		\Artisan::call('chores:import');
+		Schema::create('prefs', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('pref');
+			$table->string('value');
+			$table->timestamps();
+		});
 	}
 
 	/**
@@ -22,7 +28,7 @@ class ImportOldDb extends Migration {
 	 */
 	public function down()
 	{
-		
+		Schema::drop('prefs');
 	}
 
 }

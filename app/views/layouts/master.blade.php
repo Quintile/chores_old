@@ -1,29 +1,50 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Excessive Chores</title>
-		@section('includes')
-			<script src="{{asset('jquery/jquery-2.0.0.js')}}"></script>
-			<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-			<script src="{{asset('bootstrap/js/bootstrap.js')}}"></script>
-			<link href="{{asset('bootstrap/css/bootstrap.css')}}" rel='stylesheet' type='text/css' />
-			<link href="{{asset('bootstrap/css/bootstrap-theme.css')}}" rel='stylesheet' type='text/css' />
-			<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Open+Sans:400,800' rel='stylesheet' type='text/css'>
-			{{HTML::style('css/global.css')}}
-		@show
-		<meta name="viewport" content="width=device-width, initial-scale=1.0;">
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+	    <meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <title>Excessive Chores</title>
+	    <link rel="stylesheet" href="{{asset('foundation/css/foundation.css')}}" />
+	    <link rel="stylesheet" href="{{asset('css/global.css')}}" />
+	    <script src="{{asset('foundation/js/vendor/modernizr.js')}}"></script>
+	    <script src="{{asset('foundation/js/vendor/jquery.js')}}"></script>
 	</head>
-
-		<body>
-	<div class="container">
-	
-	@if(Session::get('flash_message'))
-		<div class="flash">
-			{{ Session::get('flash_message') }}
+	<body>
+		@include('layouts.navbar')
+		<div style="margin-bottom: 40px">
 		</div>
-	@endif
 
-	@yield('content')
-
+		@if(\Auth::check())
+		<div id="side-nav">
+			@include('layouts.sidenav')
 		</div>
+		@endif
+		<div id="content" @if(!\Auth::check()) style="margin: 0" @endif>
+		  	@if(Session::get('flash_message'))
+		  	<div class="row dont-clear">
+				<div data-alert class="alert-box info radius medium-12 columns">
+					{{ Session::get('flash_message') }}
+					<a href="#" class="close">&times;</a>
+				</div>
+			</div>
+			@endif
+
+			@yield('content')
+		</div>
+		
+		<script src="{{asset('foundation/js/foundation.min.js')}}"></script>
+		<script>
+			$(document).foundation();
+		</script>
+
+		<!--Check for invites -->
+		@if(\Auth::check() && \Auth::user()->hasUnreadInvites() && \Request::url() !== \URL::route('households.invites'))
+			@include('modals.invite', array('invite' => \Auth::user()->unreadInvites()->first()))
+		@endif
+		
+		<script type="text/javascript">
+			$('#modal-invites').foundation('reveal', 'open');
+		</script>
+
 	</body>
+</html>

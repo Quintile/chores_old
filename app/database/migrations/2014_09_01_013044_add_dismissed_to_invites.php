@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogTable extends Migration {
+class AddDismissedToInvites extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,9 @@ class CreateLogTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('logs', function(Blueprint $table)
+		Schema::table('invites', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->integer('user_id');
-			$table->integer('chore_id');
-			$table->integer('points');
-			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -29,7 +25,10 @@ class CreateLogTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('logs');
+		Schema::table('invites', function(Blueprint $table)
+		{
+			
+		});
 	}
 
 }
