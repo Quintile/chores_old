@@ -61,4 +61,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			$i->save();
 		}
 	}
+
+	public function activeHousehold()
+	{
+		return \Household::where('id', $this->household_id)->first();
+	}
+
+	public function hasActiveHousehold()
+	{
+		$house = $this->activeHousehold();
+		return ($house) ? true : false;
+	}
 }

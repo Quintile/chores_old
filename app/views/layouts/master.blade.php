@@ -38,13 +38,10 @@
 		</script>
 
 		<!--Check for invites -->
-		@if(\Auth::check() && \Auth::user()->hasUnreadInvites() && \Request::url() !== \URL::route('households.invites'))
+		@if(\Auth::check())
 			@include('modals.invite', array('invite' => \Auth::user()->unreadInvites()->first()))
+			@include('modals.active', array('household' => \Household::find(\HouseholdUser::where('user_id', \Auth::user()->id)->orderBy('created_at', 'DESC')->first()->household_id)))
 		@endif
-		
-		<script type="text/javascript">
-			$('#modal-invites').foundation('reveal', 'open');
-		</script>
 
 	</body>
 </html>

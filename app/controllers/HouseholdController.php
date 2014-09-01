@@ -65,4 +65,15 @@ class HouseholdController extends \BaseController
 		$householdUser->delete();
 		return \Redirect::back()->with('flash_message', 'You have successfully left the household');
 	}
+
+	public function activate($id)
+	{
+		$user = \Auth::user();
+		$user->household_id = $id;
+		$user->save();
+
+		return \Redirect::back()->with('flash_message', 'You have changed your active household');
+	}
+
+
 }

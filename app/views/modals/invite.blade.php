@@ -1,3 +1,4 @@
+@if(\Auth::user()->hasUnreadInvites() && \Request::url() !== \URL::route('households.invites'))
 <div id="modal-invites" class="reveal-modal small" data-reveal>
 	<div class="row">
 		<div class="medium-12 columns">
@@ -37,4 +38,8 @@
 		$('#modal-invites').foundation('reveal', 'close');
 	}
 
+	$('#modal-invites').foundation('reveal', 'open');
+
 </script>
+
+@endif

@@ -17,6 +17,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('households/manage', array('as' => 'households.manage', 'uses' => '\Controllers\HouseholdController@manage'));
 	Route::post('households/invite', array('as' => 'households.invite', 'uses' => '\Controllers\HouseholdController@invite'));
 	Route::get('households/{id}/leave', array('as' => 'households.leave', 'uses' => '\Controllers\HouseholdController@leave'));
+	Route::get('households/{id}/active', array('as' => 'households.active', 'uses' => '\Controllers\HouseholdController@activate'));
 
 	//Invites
 	Route::post('households/invites/remind/{id}', array('as' => 'households.invites.remind', 'uses' => '\Controllers\InviteController@remind'));
@@ -24,4 +25,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('households/invites', array('as' => 'households.invites', 'uses' => '\Controllers\InviteController@index'));
 	Route::get('households/invites/{id}/dismiss', array('as' => 'households.invites.dismiss', 'uses' => '\Controllers\InviteController@dismiss'));
 	Route::get('households/invites/{id}/accept', array('as' => 'households.invites.accept', 'uses' => '\Controllers\InviteController@accept'));
+
+	//Preferences
+	Route::post('preferences', array('as' => 'preferences.ajax', 'uses' => '\Controllers\PreferenceController@set'));
+	Route::get('preferences', array('as' => 'preferences', 'uses' => '\Controllers\PreferenceController@index'));
 });

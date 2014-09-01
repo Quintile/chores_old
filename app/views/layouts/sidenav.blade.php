@@ -9,5 +9,8 @@
   	<li><a href="{{\URL::route('households.create')}}">Create Household</a></li>
   	<li><a href="{{\URL::route('households.manage')}}">Manage Households</a></li>
   	<li><a href="{{\URL::route('households.invites')}}">Invites</a></li>
+
+  	<li class="heading">System</li>
+  	<li><a href="{{\URL::route('preferences')}}">Preferences</a></li>
 	@endif
 </ul>
