@@ -3,7 +3,7 @@
 
 <form action="{{\URL::route('login.post')}}" method="post">
 	<div class="row">
-		<div class="medium-6 columns medium-centered panel">
+		<div class="medium-6 columns medium-centered panel" id="login">
 			<div class="row">
 				<div class="medium-12 columns">
 					<label>
@@ -33,6 +33,5 @@
 		</div>
 	</div>
 </form>
-
 
 @stop

@@ -5,6 +5,10 @@ html {
 	font-size: 14px !important;
 }
 
+#login {
+	box-shadow: 1px 1px 10px #CCC;
+}
+
 .top-bar .name h1 a{
 	font-family: 'Open Sans Condensed', sans-serif;
 	font-size: 26px;
