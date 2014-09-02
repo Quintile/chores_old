@@ -4,6 +4,34 @@ namespace Controllers;
 
 class InviteController extends \BaseController
 {
+	public function invite()
+	{
+		$user = \User::where('email', \Input::get('household-add-email'))->first();
+		if(!$user)
+			return \Redirect::back()->with('flash_message', 'That email was not found to belong to a user');
+
+		//Can't allow duplicate invites to the same household
+		$invite = \Invite::where('household_id', \Input::get('household-id'))->where('user_id', $user->id)->first();
+		if($invite)
+			return \Redirect::back()->with('flash_message', 'That user already has a pending invite from this household');
+
+		//Can't allow an invite go through to someone already in the household
+		if($user->households()->where('household_id', \Input::get('household-id'))->first())
+			return \Redirect::back()->with('flash_message', 'That user already belongs to this household');
+
+		$invite = new \Invite();
+		$invite->origin_id = \Auth::user()->id;
+		$invite->household_id = \Input::get('household-id');
+		$invite->user_id = $user->id;
+
+		$invite->save();
+
+		$invite->email();
+
+		return \Redirect::back()->with('flash_message', 'User has been invited and membership is pending');
+
+	}
+
 	public function remind($id)
 	{
 		$invite = \Invite::find($id);

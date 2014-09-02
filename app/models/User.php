@@ -41,6 +41,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Invite');
 	}
 
+	public function sentInvites()
+	{
+		return $this->hasMany('Invite', 'origin_id');
+	}
+
 	public function hasUnreadInvites()
 	{
 		$invites = $this->invites()->where('read', false)->where('remind', '<=', with(new DateTime())->format('Y-m-d H:i:s'))->count();
@@ -71,5 +76,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		$house = $this->activeHousehold();
 		return ($house) ? true : false;
+	}
+
+	public function belongsToHousehold($house_id)
+	{
+		$result = $this->households()->where('household_id', $house_id)->first();
+		if($result)
+			return true;
+		else
+			return false;
 	}
 }

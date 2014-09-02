@@ -1,4 +1,9 @@
-@if(!\Auth::user()->hasActiveHousehold() && !\Preference::check('household-ignore-active'))
+<?php
+$membership = \HouseholdUser::where('user_id', \Auth::user()->id)->first();
+if($membership)
+	$household = \Household::find($membership->household_id);
+?>
+@if(!\Auth::user()->hasActiveHousehold() && !\Preference::check('household-ignore-active') && isset($household))
 <div id="modal-active" class="reveal-modal small" data-reveal>
 	<div class="row">
 		<div class="medium-12 columns">
@@ -24,9 +29,6 @@
 	function ignoreActive(value)
 	{
 		var posting = $.post( '{{\URL::route("preferences.ajax")}}', {'pref': 'household-ignore-active', 'value': value});
-		posting.done(function(data){
-			console.log(data);
-		});
 		$('#modal-active').foundation('reveal', 'close');
 	}
 

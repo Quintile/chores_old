@@ -22,6 +22,14 @@
 			</div>
 			<div class="row">
 				<div class="medium-12 columns">
+					<label>
+						<input type="checkbox" name="login-remember" />
+						Keep Me Logged In
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
 					<button class="button expand">Login</button>
 				</div>
 			</div>

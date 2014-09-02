@@ -14,7 +14,7 @@ class UserController extends \BaseController
 		$attempt = \Auth::attempt([
 			'email' => \Input::get('login-email'),
 			'password' => \Input::get('login-password')
-		]);
+		], \Input::get('login-remember'));
 
 		if($attempt)
 			return \Redirect::intended('/');

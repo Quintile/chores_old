@@ -2,6 +2,8 @@
 
 class Household extends Eloquent
 {
+	use SoftDeletingTrait;
+
 	protected $guarded = array();
 
 	private $rules = [
@@ -27,5 +29,25 @@ class Household extends Eloquent
 	public function invites()
 	{
 		return $this->hasMany('Invite');
+	}
+
+	public function rooms()
+	{
+		return $this->hasMany('Room');
+	}
+
+	public function isActiveHousehold()
+	{
+		return ($this->id === \Auth::user()->household_id);
+	}
+
+	public function isAdmin($id)
+	{
+		return ($this->admin_id === $id);
+	}
+
+	public function hasNoRooms()
+	{
+		return ($this->rooms()->count()) ? false : true;
 	}
 }

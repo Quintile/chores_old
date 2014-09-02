@@ -40,8 +40,10 @@
 		<!--Check for invites -->
 		@if(\Auth::check())
 			@include('modals.invite', array('invite' => \Auth::user()->unreadInvites()->first()))
-			@include('modals.active', array('household' => \Household::find(\HouseholdUser::where('user_id', \Auth::user()->id)->orderBy('created_at', 'DESC')->first()->household_id)))
+			@include('modals.active')
 		@endif
 
+		<!-- Individual yield modals -->
+		@yield('modals')
 	</body>
 </html>

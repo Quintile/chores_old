@@ -14,6 +14,7 @@ class HouseholdController extends \BaseController
 		$household = new \Household();
 		$household->name = \Input::get('household-name');
 		$household->user_id = \Auth::user()->id;
+		$household->admin_id = \Auth::user()->id;
 
 		if(!$household->isValid())
 			return \Redirect::back()->with('flash_message', 'Household name must be unique. That household name already exists.');
@@ -37,32 +38,50 @@ class HouseholdController extends \BaseController
 
 	public function manage()
 	{
+		if(!\Auth::user()->households()->count())
+			return \Redirect::route('home');
+
 		return \View::make('households.manage');
 	}
 
-	public function invite()
-	{
-		$user = \User::where('email', \Input::get('household-add-email'))->first();
-		if(!$user)
-			return \Redirect::back()->with('flash_message', 'That email was not found to belong to a user.');
-
-		$invite = new \Invite();
-		$invite->origin_id = \Auth::user()->id;
-		$invite->household_id = \Input::get('household-id');
-		$invite->user_id = $user->id;
-
-		$invite->save();
-
-		$invite->email();
-
-		return \Redirect::back()->with('flash_message', 'User has been invited and membership is pending');
-
-	}
+	
 
 	public function leave($id)
 	{
 		$householdUser = \HouseholdUser::where('user_id', \Auth::user()->id)->where('household_id', $id)->first();
 		$householdUser->delete();
+
+		$household = \Household::find($id);
+
+		//Delete any invites sent from this user, to this house
+		$invites = \Invite::where('origin_id', \Auth::user()->id)->where('household_id', $id)->get();
+		foreach($invites as $i)
+			$i->delete();
+
+		//If the user is the admin, pass on admin status to next person
+		if($household->isAdmin(\Auth::user()->id))
+		{
+			$newAdmin = \HouseholdUser::where('household_id', $id)->orderBy('created_at')->first();
+			if($newAdmin)
+			{
+				$household->admin_id = $newAdmin->user_id;
+				$household->save();
+			}
+			else
+			{
+				//If the user is the only member, delete the household
+				$household->delete();
+			}
+		}
+
+		//If this was the user's active household, remove that status
+		if(\Auth::user()->activeHousehold()->id === $id)
+		{
+			$user = \Auth::user();
+			$user->household_id = null;
+			$user->save();
+		}
+
 		return \Redirect::back()->with('flash_message', 'You have successfully left the household');
 	}
 
@@ -75,5 +94,44 @@ class HouseholdController extends \BaseController
 		return \Redirect::back()->with('flash_message', 'You have changed your active household');
 	}
 
+	public function delete($id)
+	{
+		$household = \Household::find($id);
+		if(!$household->isAdmin(\Auth::user()->id))
+			return \Redirect::back()->with('flash_message', 'You do not have permission to do that');
+
+		//Delete all membership
+		$members = \HouseholdUser::where('household_id', $household->id)->get();
+		foreach($members as $m)
+			$m->delete();
+
+		//Delete all invites
+		$invites = \Invite::where('household_id', $household->id)->get();
+		foreach($invites as $i)
+			$i->delete();
+
+		//Users
+		$users = \User::where('household_id', $household->id)->get();
+		foreach($users as $u)
+		{
+			$u->household_id = null;
+			$u->save();
+		}
+
+		$household->delete();
+
+		return \Redirect::back()->with('flash_message', 'Household permanently deleted');
+	}
+
+	public function admin($id, $user_id)
+	{
+		$user = \User::find($user_id);
+		if(!$user->belongsToHousehold($id))
+			return \Redirect::back()->with('flash_message', 'That user does not belong to that household');
+		$household = \Household::find($id);
+		$household->admin_id = $user_id;
+		$household->save();
+		return \Redirect::back()->with('flash_message', 'Admin has moved to '.$user->name);
+	}
 
 }
