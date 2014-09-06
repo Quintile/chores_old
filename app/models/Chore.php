@@ -4,23 +4,23 @@ class Chore extends \Eloquent
 {
 	protected $guarded = array();
 
-	public $lastdone;
+	//public $lastdone;
 
 	public function __construct()
 	{
-		$this->lastdone = $this->lastDone();
+		//$this->lastdone = $this->lastDone();
+	}
+
+	public function importance()
+	{
+		return $this->hasMany('\Importance');
 	}
 
 	public function room()
 	{
-		return $this->belongsTo('\Models\Room');
+		return $this->belongsTo('\Room');
 	}
-
-	public function logs()
-	{
-		return $this->hasMany('\Models\Log');
-	}
-
+/*
 	public function days()
 	{
 		if(is_null($this->lastDone()))
@@ -31,6 +31,7 @@ class Chore extends \Eloquent
 		return $diff;
 	}
 
+	/*
 	private function lastDone()
 	{
 		$log = \Models\Log::where('chore_id', $this->id)->
@@ -38,8 +39,8 @@ class Chore extends \Eloquent
 							first();
 		return ($log) ? $log->created_at : null;
 
-	}
-
+	}*/
+	/*
 	public function daysString()
 	{
 		if(is_null($this->days()))
@@ -99,5 +100,18 @@ class Chore extends \Eloquent
 			default:
 				return $this->frequency;
 		}
+	}
+	*/
+	public function getImportance()
+	{
+		if(!$this->importance()->count())
+			return null;
+
+		$sum = 0;
+		foreach($this->importance as $i)
+			$sum += $i->importance;
+		
+
+		return $sum / $this->importance()->count();
 	}
 }

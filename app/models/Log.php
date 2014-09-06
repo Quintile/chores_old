@@ -1,7 +1,5 @@
 <?php
-
-namespace Models;
-
+/*
 class Log extends \Eloquent
 {
 	protected $guarded = array();
@@ -14,6 +12,6 @@ class Log extends \Eloquent
 
 	public function chore()
 	{
-		return $this->belongsTo('Chore');
+		return $this->belongsTo('\Chore');
 	}
 }

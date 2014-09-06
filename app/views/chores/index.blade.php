@@ -12,107 +12,138 @@
 				@if($r->chores()->count() == 0)
 					<li>None</li>
 				@endif
-				@foreach($r->chores() as $c)
-					<li>{{$c->name}}</li>
+				@foreach($r->chores as $c)
+					<li>{{$c->name}} ({{$c->getImportance()}} Importance)</li>
 				@endforeach
 				</ul>
-
 			</li>
-
 		@endforeach
 		</ul>
 	</div>
 	<div class="medium-6 columns">
-		<h3>Create A Chore</h3>
-		<div class="panel" id="create-chore">
-			<div class="row">
-				<div class="small-6 columns">
-					<label>
-						Name
-						<input type="text" name="chore-name" />
-					</label>
-				</div>
-				<div class="small-6 columns">
-					<label>
-						Room
-						<select name="chore-room">
-						@foreach(\Room::orderBy('name')->get() as $r)
-							<option value="{{$r->id}}">{{$r->name}}</option>
-						@endforeach
-						</select>
-					</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<label>
-						Description
-						<textarea name="chore-description"></textarea>
-					</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-3 columns">
-					<label>
-						Duration
-						<input type="number" name="chore-duration" min="1" />
-					</label>
-				</div>
-				<div class="small-9 columns">
-					<p class="info">
-					<strong>Duration: </strong> The number of <strong>minutes</strong> it takes to complete the chore (on average). This value is used to calculate it's score.
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-4 columns">
-					<label id="frequency">
-						Frequency
-						@if(\Preference::check('create-chore-frequency') == 'simple')
-						<select name="chore-frequency">
-							<option value="1">Daily</option>
-							<option value="3">Twice a Week</option>
-							<option value="7">Weekly</option>
-							<option value="14">Bi-Weekly</option>
-							<option value="30">Monthly</option>
-							<option value="60">Bi-Monthly</option>
-							<option value="365">Yearly</option>
-						</select>
-						@else
-							<input type="number" name="chore-frequency" min="1" />
-						@endif
-					</label>
-				</div>
-				<div class="small-8 columns">
-					<p class="info">
-					<strong>Frequency: </strong> The number of <strong>days</strong> between when this chore needs to be completed.
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<div class="right">
+		<form action="{{\URL::route('chores.add.post')}}" method="post">
+			<h3>Create A Chore</h3>
+			<div class="panel" id="create-chore">
+				<div class="row">
+					<div class="small-6 columns">
 						<label>
-							<input type="checkbox" id="chore-frequency-toggle" @if(\Preference::check('create-chore-frequency') == "simple") checked="checked" @endif />
-							Use Simple Frequency
+							Name
+							<input type="text" name="chore-name" />
+						</label>
+					</div>
+					<div class="small-6 columns">
+						<label>
+							Room
+							<select name="chore-room">
+							@foreach(\Room::orderBy('name')->get() as $r)
+								<option value="{{$r->id}}">{{$r->name}}</option>
+							@endforeach
+							</select>
 						</label>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="small-12 columns">
-					<button class="button expand">Create Chore</button>
+				<div class="row">
+					<div class="small-12 columns">
+						<label>
+							Description
+							<textarea name="chore-description"></textarea>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-3 columns">
+						<label>
+							Duration
+							<input type="number" name="chore-duration" min="1" />
+						</label>
+					</div>
+					<div class="small-9 columns">
+						<p class="info">
+						<strong>Duration: </strong> The number of <strong>minutes</strong> it takes to complete the chore (on average). This value is used to calculate it's score.
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-4 columns">
+						<label id="frequency">
+							Frequency
+							@if(\Preference::check('create-chore-frequency') == 'simple')
+							<select name="chore-frequency">
+								<option value="1">Daily</option>
+								<option value="3">Twice a Week</option>
+								<option value="7">Weekly</option>
+								<option value="14">Bi-Weekly</option>
+								<option value="30">Monthly</option>
+								<option value="60">Bi-Monthly</option>
+								<option value="365">Yearly</option>
+							</select>
+							@else
+								<input type="number" name="chore-frequency" min="1" />
+							@endif
+						</label>
+					</div>
+					<div class="small-8 columns">
+						<p class="info">
+						<strong>Frequency: </strong> The number of <strong>days</strong> between when this chore needs to be completed.
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<div class="right">
+							<label>
+								<input type="checkbox" id="chore-frequency-toggle" @if(\Preference::check('create-chore-frequency') == "simple") checked="checked" @endif />
+								Use Simple Frequency
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-4 columns">
+						<label id="importance">
+							Importance
+							@if(\Preference::check('create-chore-importance') == 'simple')
+							<select name="chore-importance">
+								<option value="1">Not Important</option>
+								<option value="5">Somewhat</option>
+								<option value="10">Important</option>
+							</select>
+							@else
+								<input type="number" name="chore-importance" min="1" max="10" />
+							@endif
+						</label>
+					</div>
+					<div class="small-8 columns">
+						<p class="info">
+						<strong>Importance: </strong> More important chores take priority over less important chores, even if the days since they were last done are the same. <a href="#">Learn more</a>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<div class="right">
+							<label>
+								<input type="checkbox" id="chore-importance-toggle" @if(\Preference::check('create-chore-importance') == "simple") checked="checked" @endif />
+								Use Simple Importance
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="small-12 columns">
+						<button class="button expand">Create Chore</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
 
 <div style="display: none">
-	<div id="template-advanced">
+	<div id="template-advanced-frequency">
 		<input type="number" name="chore-frequency" min="1" style="display: none" />
 	</div>
-	<div id="template-simple">
+	<div id="template-simple-frequency">
 		<select name="chore-frequency" style="display: none">
 			<option value="1">Daily</option>
 			<option value="2">Every Other Day</option>
@@ -122,6 +153,16 @@
 			<option value="30">Monthly</option>
 			<option value="60">Bi-Monthly</option>
 			<option value="365">Yearly</option>
+		</select>
+	</div>
+	<div id="template-advanced-importance">
+		<input type="number" name="chore-importance" min="1" max="10" style="display: none" />
+	</div>
+	<div id="template-simple-importance">
+		<select name="chore-importance" style="display: none">
+			<option value="1">Not Important</option>
+			<option value="5">Somewhat</option>
+			<option value="10">Important</option>
 		</select>
 	</div>
 </div>
@@ -142,20 +183,45 @@
 			if(!$(this).prop('checked'))
 			{
 				$("#frequency select").remove();
-				$("#frequency").append($("#template-advanced").html());
+				$("#frequency").append($("#template-advanced-frequency").html());
 				$("#frequency input").fadeIn();
 				frequency = 'advanced';
 			}
 			else
 			{
 				$("#frequency input").remove();
-				$("#frequency").append($("#template-simple").html());
+				$("#frequency").append($("#template-simple-frequency").html());
 				$("#frequency select").fadeIn();
 				frequency = 'simple';
 			}
 
 			var posting = $.post( '{{\URL::route("preferences.ajax")}}', {'pref': 'create-chore-frequency', 'value': frequency});
 
+		});
+
+		@if(\Preference::check('create-chore-importance'))
+			var importance = "{{\Preference::check('create-chore-importance')}}";
+		@else
+			var importance = 'simple';
+		@endif
+
+		$("#chore-importance-toggle").click(function(){
+			if(!$(this).prop('checked'))
+			{
+				$("#importance select").remove();
+				$("#importance").append($("#template-advanced-importance").html());
+				$("#importance input").fadeIn();
+				importance = 'advanced';
+			}
+			else
+			{
+				$("#importance input").remove();
+				$("#importance").append($("#template-simple-importance").html());
+				$("#importance select").fadeIn();
+				importance = 'simple';
+			}
+
+			var posting = $.post( '{{\URL::route("preferences.ajax")}}', {'pref': 'create-chore-importance', 'value': importance});
 		});
 	});
 

@@ -10,13 +10,11 @@
 		<ul id="rooms-list">
 			@foreach(\Auth::user()->activeHousehold()->rooms as $room)
 			<li>
-				<span class="chore-count">{{$room->chores()->count()}} Chores</span>
 				<h5>{{$room->name}}</h5>
-				<div>
+				
 					<a class="button tiny alert" href="{{\URL::route('rooms.delete', $room->id)}}">Delete</a>
 					<a class="button tiny" href="#">Edit</a>
-					<div style="clear: both"></div>
-				</div>
+				
 			</li>
 			@endforeach
 		</ul>

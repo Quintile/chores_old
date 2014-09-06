@@ -15,6 +15,7 @@ Route::group(array('before' => 'auth'), function()
 	//Chores
 	Route::get('chores/add', array('as' => 'chores.add', 'uses' => '\Controllers\ChoreController@create'));
 	Route::post('chores/add', array('as' => 'chores.add.post', 'uses' => '\Controllers\ChoreController@store'));
+	
 
 	//Rooms
 	Route::get('rooms', array('as' => 'rooms.index', 'uses' => '\Controllers\RoomController@index'));
@@ -29,6 +30,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('households/{id}/active', array('as' => 'households.active', 'uses' => '\Controllers\HouseholdController@activate'));
 	Route::get('households/{id}/delete', array('as' => 'households.delete', 'uses' => '\Controllers\HouseholdController@delete'));
 	Route::get('households/{id}/admin/{user}', array('as' => 'households.admin', 'uses' => '\Controllers\HouseholdController@admin'));
+	
 	//Invites
 	Route::post('households/invite', array('as' => 'households.invite', 'uses' => '\Controllers\InviteController@invite'));
 	Route::post('households/invites/remind/{id}', array('as' => 'households.invites.remind', 'uses' => '\Controllers\InviteController@remind'));
