@@ -198,12 +198,40 @@ p {
 
 /* CHORE MANAGEMENT */
 
-#create-chore p.info  {
+p.info  {
 	font-size: 12px !important;
 	margin-top: 10px;
+	line-height: 16px;
 }
 
 #chore-frequency-toggle {
 	position: relative;
 	top: 2px;
+}
+
+ul.view-chores-room-list {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+ul.view-chores-room-list > li {
+	font-family: "Open Sans Condensed", sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	float: left;
+	min-width: 200px;
+}
+
+ul.view-chores-chore-list {
+	list-style-type: none;
+	margin-bottom: 10px;
+
+}
+
+ul.view-chores-chore-list > li {
+	font-family: "Open Sans", sans-serif;
+	font-weight: normal;
+	font-size: 13px;
+
 }

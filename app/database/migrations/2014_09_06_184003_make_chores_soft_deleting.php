@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUseridToHousehold extends Migration {
+class MakeChoresSoftDeleting extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class AddUseridToHousehold extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('households', function(Blueprint $table)
+		Schema::table('chores', function(Blueprint $table)
 		{
-			$table->integer('user_id')->nullable();
+			$table->softDeletes();
 		});
 	}
 
@@ -25,9 +25,9 @@ class AddUseridToHousehold extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('households', function(Blueprint $table)
+		Schema::table('chores', function(Blueprint $table)
 		{
-			$table->dropColumn('user_id');
+			$table->dropColumn('deleted_at');
 		});
 	}
 

@@ -16,4 +16,9 @@ class Room extends \Eloquent
 		$this->errors = $validation->messages();
 		return false;
 	}
+
+	public function household()
+	{
+		return $this->belongsTo('\Household');
+	}
 }

@@ -15,7 +15,10 @@ Route::group(array('before' => 'auth'), function()
 	//Chores
 	Route::get('chores/add', array('as' => 'chores.add', 'uses' => '\Controllers\ChoreController@create'));
 	Route::post('chores/add', array('as' => 'chores.add.post', 'uses' => '\Controllers\ChoreController@store'));
-	
+	Route::get('chores/{id}/view', array('as' => 'chores.view', 'uses' => '\Controllers\ChoreController@view'));
+	Route::get('chores/{id}/edit', array('as' => 'chores.edit', 'uses' => '\Controllers\ChoreController@create'));
+	Route::get('chores/{id}/delete', array('as' => 'chores.delete', 'uses' => '\Controllers\ChoreController@delete'));
+	Route::post('chores/{id}/edit', array('as' => 'chores.edit.post', 'uses' => '\Controllers\ChoreController@edit'));
 
 	//Rooms
 	Route::get('rooms', array('as' => 'rooms.index', 'uses' => '\Controllers\RoomController@index'));
@@ -42,4 +45,8 @@ Route::group(array('before' => 'auth'), function()
 	//Preferences
 	Route::post('preferences', array('as' => 'preferences.ajax', 'uses' => '\Controllers\PreferenceController@set'));
 	Route::get('preferences', array('as' => 'preferences', 'uses' => '\Controllers\PreferenceController@index'));
+	
+	//Household Preferences
+	Route::post('preferences/household', array('as' => 'preferences.household.ajax', 'uses' => '\Controllers\PreferenceController@setHouse'));
+
 });

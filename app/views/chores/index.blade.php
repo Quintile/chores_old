@@ -4,16 +4,33 @@
 <div class="row">
 	<div class="medium-6 columns">
 		<h3>View Chores</h3>
-		<ul>
+		<p class="info">
+			This list is for keeping track of which chores have been added under which rooms, and is not intended
+			to be used as a readable list for deciding what chores need to be done.
+		</p>
+		<p class="info">
+			For more usable lists, please
+			check out <a href="#">link a</a>, <a href="#">link b</a> or <a href="#">link c</a>.
+		</p>
+		<ul class="view-chores-room-list">
 		@foreach(\Auth::user()->activeHousehold()->rooms as $r)
 			<li>
 				{{$r->name}}
-				<ul>
+				<ul class="view-chores-chore-list">
 				@if($r->chores()->count() == 0)
 					<li>None</li>
 				@endif
 				@foreach($r->chores as $c)
-					<li>{{$c->name}} ({{$c->getImportance()}} Importance)</li>
+					<li>
+						<a data-dropdown="drop-chore-{{$c->id}}" aria-controls="drop-chore-{{$c->id}}" aria-expanded="false">{{$c->name}}</a> {{$c->importance()}}
+						<ul id="drop-chore-{{$c->id}}" class="f-dropdown" data-dropdown-content aria-hidden="true" tabindex="-1">
+							<li><a href="{{\URL::route('chores.view', $c->id)}}">Go To Chore Page</a></li>
+							@if($c->household()->isAdmin(\Auth::user()->id) || (\Preference::check('household-pref-editing') == 'members' || $c->user_id == \Auth::user()->id))
+							<li><a href="{{\URL::route('chores.edit', $c->id)}}">Edit Chore</a></li>
+							@endif
+							<li><a href="{{\URL::route('chores.delete', $c->id)}}" onclick="return confirm('Are you sure you want to delete this? This cannot be undone.')">Delete Chore</a></li>
+						</ul>
+					</li>
 				@endforeach
 				</ul>
 			</li>
@@ -21,14 +38,14 @@
 		</ul>
 	</div>
 	<div class="medium-6 columns">
-		<form action="{{\URL::route('chores.add.post')}}" method="post">
-			<h3>Create A Chore</h3>
+		<form action="{{(isset($chore)) ? \URL::route('chores.edit', $chore->id) : \URL::route('chores.add.post')}}" method="post">
+			<h3>{{(isset($chore)) ? 'Edit' : 'Create'}} A Chore</h3>
 			<div class="panel" id="create-chore">
 				<div class="row">
 					<div class="small-6 columns">
 						<label>
 							Name
-							<input type="text" name="chore-name" />
+							<input type="text" name="chore-name" autofocus @if(isset($chore)) value="{{$chore->name}}" @endif />
 						</label>
 					</div>
 					<div class="small-6 columns">
@@ -36,7 +53,7 @@
 							Room
 							<select name="chore-room">
 							@foreach(\Room::orderBy('name')->get() as $r)
-								<option value="{{$r->id}}">{{$r->name}}</option>
+								<option value="{{$r->id}}" @if(!isset($chore) && \Preference::check('create-chore-lastroom') == $r->id) selected @elseif(isset($chore) && $chore->room_id == $r->id) selected @endif>{{$r->name}}</option>
 							@endforeach
 							</select>
 						</label>
@@ -46,7 +63,7 @@
 					<div class="small-12 columns">
 						<label>
 							Description
-							<textarea name="chore-description"></textarea>
+							<textarea name="chore-description">{{(isset($chore)) ? $chore->description : ''}}</textarea>
 						</label>
 					</div>
 				</div>
@@ -54,7 +71,7 @@
 					<div class="small-3 columns">
 						<label>
 							Duration
-							<input type="number" name="chore-duration" min="1" />
+							<input type="number" name="chore-duration" min="1" value="{{(isset($chore)) ? $chore->duration : ''}}" />
 						</label>
 					</div>
 					<div class="small-9 columns">
@@ -69,13 +86,13 @@
 							Frequency
 							@if(\Preference::check('create-chore-frequency') == 'simple')
 							<select name="chore-frequency">
-								<option value="1">Daily</option>
-								<option value="3">Twice a Week</option>
-								<option value="7">Weekly</option>
-								<option value="14">Bi-Weekly</option>
-								<option value="30">Monthly</option>
-								<option value="60">Bi-Monthly</option>
-								<option value="365">Yearly</option>
+								<option value="1" @if(isset($chore) && $chore->frequency == '1') selected @endif>Daily</option>
+								<option value="3" @if(isset($chore) && $chore->frequency == '3') selected @endif>Twice a Week</option>
+								<option value="7" @if(isset($chore) && $chore->frequency == '7') selected @endif>Weekly</option>
+								<option value="14" @if(isset($chore) && $chore->frequency == '14') selected @endif>Bi-Weekly</option>
+								<option value="30" @if(isset($chore) && $chore->frequency == '30') selected @endif>Monthly</option>
+								<option value="60" @if(isset($chore) && $chore->frequency == '60') selected @endif>Bi-Monthly</option>
+								<option value="365" @if(isset($chore) && $chore->frequency == '365') selected @endif>Yearly</option>
 							</select>
 							@else
 								<input type="number" name="chore-frequency" min="1" />
@@ -98,18 +115,22 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="row">
 					<div class="small-4 columns">
 						<label id="importance">
 							Importance
 							@if(\Preference::check('create-chore-importance') == 'simple')
 							<select name="chore-importance">
-								<option value="1">Not Important</option>
-								<option value="5">Somewhat</option>
-								<option value="10">Important</option>
+								@if(isset($chore) && is_null($chore->personalImportance()))
+								<option value="" selected></option>
+								@endif
+								<option value="1" @if(isset($chore) && $chore->personalImportance() == 1) selected @endif>Not Important</option>
+								<option value="5" @if(isset($chore) && $chore->personalImportance() == 5) selected @endif>Somewhat</option>
+								<option value="10" @if(isset($chore) && $chore->personalImportance() == 10) selected @endif>Important</option>
 							</select>
 							@else
-								<input type="number" name="chore-importance" min="1" max="10" />
+								<input type="number" name="chore-importance" min="1" max="10" @if(isset($chore)) value="{{$chore->personalImportance()}}" @endif />
 							@endif
 						</label>
 					</div>
@@ -131,7 +152,10 @@
 				</div>
 				<div class="row">
 					<div class="small-12 columns">
-						<button class="button expand">Create Chore</button>
+						<button class="button expand">{{(isset($chore)) ? 'Edit' : 'Create'}} Chore</button>
+						@if(isset($chore))
+						<a class="button default expand" href="{{\URL::route('chores.add')}}">Cancel Edit Mode</a>
+						@endif
 					</div>
 				</div>
 			</div>
@@ -145,24 +169,26 @@
 	</div>
 	<div id="template-simple-frequency">
 		<select name="chore-frequency" style="display: none">
-			<option value="1">Daily</option>
-			<option value="2">Every Other Day</option>
-			<option value="3">Twice a Week</option>
-			<option value="7">Weekly</option>
-			<option value="14">Bi-Weekly</option>
-			<option value="30">Monthly</option>
-			<option value="60">Bi-Monthly</option>
-			<option value="365">Yearly</option>
+			<option value="1" @if(isset($chore) && $chore->frequency == '1') selected @endif>Daily</option>
+			<option value="3" @if(isset($chore) && $chore->frequency == '3') selected @endif>Twice a Week</option>
+			<option value="7" @if(isset($chore) && $chore->frequency == '7') selected @endif>Weekly</option>
+			<option value="14" @if(isset($chore) && $chore->frequency == '14') selected @endif>Bi-Weekly</option>
+			<option value="30" @if(isset($chore) && $chore->frequency == '30') selected @endif>Monthly</option>
+			<option value="60" @if(isset($chore) && $chore->frequency == '60') selected @endif>Bi-Monthly</option>
+			<option value="365" @if(isset($chore) && $chore->frequency == '365') selected @endif>Yearly</option>
 		</select>
 	</div>
 	<div id="template-advanced-importance">
-		<input type="number" name="chore-importance" min="1" max="10" style="display: none" />
+		<input type="number" name="chore-importance" min="1" max="10" style="display: none" @if(isset($chore)) value="{{$chore->personalImportance()}}" @endif />
 	</div>
 	<div id="template-simple-importance">
 		<select name="chore-importance" style="display: none">
-			<option value="1">Not Important</option>
-			<option value="5">Somewhat</option>
-			<option value="10">Important</option>
+			@if(isset($chore) && is_null($chore->personalImportance()))
+				<option value="" selected></option>
+			@endif
+			<option value="1" @if(isset($chore) && $chore->personalImportance() == '1') selected @endif>Not Important</option>
+			<option value="5" @if(isset($chore) && $chore->personalImportance() == '5') selected @endif>Somewhat</option>
+			<option value="10" @if(isset($chore) && $chore->personalImportance() == '10') selected @endif>Important</option>
 		</select>
 	</div>
 </div>

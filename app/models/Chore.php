@@ -1,17 +1,12 @@
 <?php
 
-class Chore extends \Eloquent
+class Chore extends Eloquent
 {
+	use SoftDeletingTrait;
+
 	protected $guarded = array();
 
-	//public $lastdone;
-
-	public function __construct()
-	{
-		//$this->lastdone = $this->lastDone();
-	}
-
-	public function importance()
+	private function getImportance()
 	{
 		return $this->hasMany('\Importance');
 	}
@@ -19,6 +14,16 @@ class Chore extends \Eloquent
 	public function room()
 	{
 		return $this->belongsTo('\Room');
+	}
+
+	public function household()
+	{
+		return $this->room->household;
+	}
+
+	public function owner()
+	{
+		return $this->hasOne('\User');
 	}
 /*
 	public function days()
@@ -102,16 +107,35 @@ class Chore extends \Eloquent
 		}
 	}
 	*/
-	public function getImportance()
+
+	public function personalImportance()
 	{
-		if(!$this->importance()->count())
+		$import = \Importance::where('user_id', \Auth::user()->id)->where('chore_id', $this->id)->first();
+		return ($import) ? $import->importance : null;
+	}
+
+	public function importance()
+	{
+		if(!$this->getImportance()->count())
 			return null;
 
-		$sum = 0;
-		foreach($this->importance as $i)
-			$sum += $i->importance;
-		
+		if(\Preference::check('household-pref-importance') == 'average')
+		{
+			$sum = 0;
+			foreach($this->getImportance()->get() as $i)
+				$sum += $i->importance;
+			
+			return $sum / $this->getImportance()->count();
+		}
+		else
+		{
+			$import = $this->getImportance()->where('user_id', $this->user_id)->first();
+			if($import)
+				return $import->importance;
+			else
+				return null;
+		}
 
-		return $sum / $this->importance()->count();
+		
 	}
 }

@@ -9,7 +9,7 @@ class Importance extends \Eloquent
 		if(is_object($chore) && get_class($chore) == 'Chore')
 		{
 			$this->chore_id = $chore->id;
-			$this->user_id = $chore->user_id;
+			$this->user_id = \Auth::user()->id;
 			$this->importance = $importance;
 		}
 	}

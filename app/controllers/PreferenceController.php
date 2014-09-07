@@ -19,4 +19,15 @@ class PreferenceController extends \BaseController
 	{
 		return \View::make('preferences.index');
 	}
+
+	public function setHouse($pref = null, $value = null)
+	{
+		if(is_null($pref) || is_null($value))
+		{
+			$pref = \Input::get('pref');
+			$value = \Input::get('value');
+		}
+
+		\Preference::setHouse($pref, $value);
+	}
 }

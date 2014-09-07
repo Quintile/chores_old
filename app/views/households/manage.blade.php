@@ -30,6 +30,35 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="medium-12 columns">
+						<h4>Settings</h4>
+						<div class="small-3 columns">
+							<label>
+								Chore Importance
+								<select id="household-pref-importance" @if(!$h->isAdmin(\Auth::user()->id)) disabled @endif>
+									<option value="creator" @if(\Preference::check('household-pref-importance') == 'creator') selected @endif>Set By Creator</option>
+									<option value="average" @if(\Preference::check('household-pref-importance') == 'average') selected @endif>Set By Average</option>
+								</select>
+							</label>
+						</div>
+						<div class="small-3 columns">
+							<label>
+								Editing
+								<select id="household-pref-editing" @if(!$h->isAdmin(\Auth::user()->id)) disabled @endif>
+									<option value="owner" @if(\Preference::check('household-pref-editing') == 'owner') selected @endif>By Owner Only</option>
+									<option value="members" @if(\Preference::check('household-pref-editing') == 'members') selected @endif>By Household Members</option>
+								</select>
+							</label>
+						</div>
+						<div class="small-3 columns">
+
+						</div>
+						<div class="small-3 columns">
+
+						</div>
+					</div>
+				</div>
+				<div class="row">
 					<div class="medium-6 columns">
 						<h4>User List</h4>
 						<ul class="user-list">
@@ -87,4 +116,17 @@
 		</ol>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#household-pref-importance").change(function(){
+			var posting = $.post( '{{\URL::route("preferences.household.ajax")}}', {'pref': 'household-pref-importance', 'value': $(this).val()});
+		});
+
+		$("#household-pref-editing").change(function(){
+			var posting = $.post( '{{\URL::route("preferences.household.ajax")}}', {'pref': 'household-pref-editing', 'value': $(this).val()});
+		});
+	});
+</script>
+
 @stop

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUseridToHousehold extends Migration {
+class AddHouseholdidToPrefs extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,9 +12,9 @@ class AddUseridToHousehold extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('households', function(Blueprint $table)
+		Schema::table('prefs', function(Blueprint $table)
 		{
-			$table->integer('user_id')->nullable();
+			$table->integer('household_id')->nullable();
 		});
 	}
 
@@ -25,9 +25,9 @@ class AddUseridToHousehold extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('households', function(Blueprint $table)
+		Schema::table('prefs', function(Blueprint $table)
 		{
-			$table->dropColumn('user_id');
+			//
 		});
 	}
 
