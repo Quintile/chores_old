@@ -19,6 +19,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('chores/{id}/edit', array('as' => 'chores.edit', 'uses' => '\Controllers\ChoreController@create'));
 	Route::get('chores/{id}/delete', array('as' => 'chores.delete', 'uses' => '\Controllers\ChoreController@delete'));
 	Route::post('chores/{id}/edit', array('as' => 'chores.edit.post', 'uses' => '\Controllers\ChoreController@edit'));
+	Route::get('chores', array('as' => 'chores', 'uses' => '\Controllers\ChoreController@index'));
 
 	//Rooms
 	Route::get('rooms', array('as' => 'rooms.index', 'uses' => '\Controllers\RoomController@index'));

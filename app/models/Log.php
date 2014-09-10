@@ -1,7 +1,8 @@
 <?php
-/*
-class Log extends \Eloquent
+
+class ChoreLog extends \Eloquent
 {
+	protected $table = 'logs';
 	protected $guarded = array();
 
 	public function __construct($chore_id = null, $user_id = null)

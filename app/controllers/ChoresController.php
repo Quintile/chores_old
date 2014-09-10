@@ -4,14 +4,20 @@ namespace Controllers;
 
 class ChoreController extends \BaseController
 {
+	public function index()
+	{
+		$chores = \Chore::orderBy('room_id')->get();
+		return \View::make('chores.index', compact('chore'));
+	}
+
 	public function create($id = null)
 	{
 		if(is_null($id))
-			return \View::make('chores.index');
+			return \View::make('chores.manage');
 		else
 		{
 			$chore = \Chore::find($id);
-			return \View::make('chores.index', compact('chore'));
+			return \View::make('chores.manage', compact('chore'));
 		}
 	}
 
@@ -45,7 +51,7 @@ class ChoreController extends \BaseController
 			return \Redirect::back()->with('flash_message', 'Chore successfully deleted');
 		}
 
-		if($chore->room->household()->isAdmin(\Auth::user()->id))
+		if($chore->room->household->isAdmin(\Auth::user()->id))
 		{
 			$chore->delete();
 			return \Redirect::back()->with('flash_message', 'Chore successfully deleted');

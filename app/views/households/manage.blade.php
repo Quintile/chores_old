@@ -40,6 +40,9 @@
 									<option value="average" @if(\Preference::check('household-pref-importance') == 'average') selected @endif>Set By Average</option>
 								</select>
 							</label>
+							<div class="response-wrapper">
+								<div class="ajax-response-importance ajax-response"></div>
+							</div>
 						</div>
 						<div class="small-3 columns">
 							<label>
@@ -49,6 +52,9 @@
 									<option value="members" @if(\Preference::check('household-pref-editing') == 'members') selected @endif>By Household Members</option>
 								</select>
 							</label>
+							<div class="response-wrapper">
+								<div class="ajax-response-editing ajax-response"></div>
+							</div>
 						</div>
 						<div class="small-3 columns">
 
@@ -120,11 +126,31 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#household-pref-importance").change(function(){
+			var element = $(this);
 			var posting = $.post( '{{\URL::route("preferences.household.ajax")}}', {'pref': 'household-pref-importance', 'value': $(this).val()});
+			posting.done(function(data){
+				$(".ajax-response-importance").html('Settings Saved');
+				$(element).addClass('ajax-success');
+				$(".ajax-response-importance").fadeIn(500, function(){
+					$(".ajax-response-importance").fadeOut(1000, function(){
+						$(element).removeClass('ajax-success');
+					});
+				});
+			});
 		});
 
 		$("#household-pref-editing").change(function(){
+			var element = $(this);
 			var posting = $.post( '{{\URL::route("preferences.household.ajax")}}', {'pref': 'household-pref-editing', 'value': $(this).val()});
+			posting.done(function(data){
+				$(".ajax-response-editing").html('Settings Saved');
+				$(element).addClass('ajax-success');
+				$(".ajax-response-editing").fadeIn(500, function(){
+					$(".ajax-response-editing").fadeOut(1000, function(){
+						$(element).removeClass('ajax-success');
+					});
+				});
+			});
 		});
 	});
 </script>

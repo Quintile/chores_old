@@ -5,6 +5,7 @@
 
 	@if(\Auth::check())
     <li class="heading">Chores</li>
+    <li><a href="{{\URL::route('chores')}}">Chores (By Room)</a></li>
     <li><a href="{{\URL::route('chores.add')}}">Add a Chore</a></li>
     <li class="heading">Rooms</li>
     <li><a href="{{\URL::route('rooms.index')}}">Room Management</a></li>

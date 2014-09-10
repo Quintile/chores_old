@@ -25,7 +25,15 @@ class Chore extends Eloquent
 	{
 		return $this->hasOne('\User');
 	}
-/*
+
+	private function lastDone()
+	{
+		$log = \ChoreLog::where('chore_id', $this->id)->
+							orderBy('created_at', 'DESC')->
+							first();
+		return ($log) ? $log->created_at : null;
+	}
+
 	public function days()
 	{
 		if(is_null($this->lastDone()))
@@ -36,15 +44,17 @@ class Chore extends Eloquent
 		return $diff;
 	}
 
-	/*
-	private function lastDone()
+	public function daysString()
 	{
-		$log = \Models\Log::where('chore_id', $this->id)->
-							orderBy('created_at', 'DESC')->
-							first();
-		return ($log) ? $log->created_at : null;
+		$days = $this->days();
+		if($days == 0)
+			return "Never";
+		if($days == 1)
+			return $days." Day";
+		if($days > 1)
+			return $days." Days";
+	}
 
-	}*/
 	/*
 	public function daysString()
 	{
