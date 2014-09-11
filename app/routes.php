@@ -20,6 +20,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('chores/{id}/delete', array('as' => 'chores.delete', 'uses' => '\Controllers\ChoreController@delete'));
 	Route::post('chores/{id}/edit', array('as' => 'chores.edit.post', 'uses' => '\Controllers\ChoreController@edit'));
 	Route::get('chores', array('as' => 'chores', 'uses' => '\Controllers\ChoreController@index'));
+	Route::get('chores/{id}/claim', array('as' => 'chores.claim', 'uses' => '\Controllers\ChoreController@claim'));
 
 	//Rooms
 	Route::get('rooms', array('as' => 'rooms.index', 'uses' => '\Controllers\RoomController@index'));

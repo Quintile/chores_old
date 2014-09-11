@@ -85,4 +85,12 @@ class ChoreController extends \BaseController
 
 		return \Redirect::back()->with('flash_message', 'Chore successfully edited');
 	}
+
+	public function claim($id)
+	{
+		$chore = \Chore::find($id);
+		$chore->claim();
+
+		return \Redirect::back()->with('flash_message', 'You have claimed a chore');
+	}
 }

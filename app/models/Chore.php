@@ -47,37 +47,46 @@ class Chore extends Eloquent
 	public function daysString()
 	{
 		$days = $this->days();
-		if($days == 0)
+		if(is_null($days))
 			return "Never";
+		if($days == 0)
+			return "Today";
 		if($days == 1)
 			return $days." Day";
 		if($days > 1)
 			return $days." Days";
 	}
 
-	/*
-	public function daysString()
-	{
-		if(is_null($this->days()))
-			return "Never";
-		elseif($this->days() > 0)
-			return $this->days()." Days";
-		elseif($this->days() == '0')
-			return "Today";
-	}
-
 	public function priority()
 	{
-		if(is_null($this->days()))
-			$days = $this->frequency;
-		else
-			$days = $this->days();
+		//Grab the days since its been last done
+		$days = $this->days();
 
+		if(is_null($days))
+			$days = $this->frequency;
+
+		//Base priority is the number of days since it was done
+		//divided by the frequency it should be done.
 		$priority = $days / $this->frequency;
 		
+		//The priority needs to be altered depending on it's importance
+		$importance = $this->importance() / 2;
+		$priority = $priority * ($importance / 10.0 + 1);
+
 		return number_format($priority, 2);
 	}
 
+	public function score()
+	{
+		return round($this->priority() * 1050.50);
+	}
+
+	public function claim()
+	{
+		$this->claim_id = \Auth::user()->id;
+		$this->save();
+	}
+/*
 	public function urgency()
 	{
 		$priority = $this->priority();
