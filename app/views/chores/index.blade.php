@@ -11,28 +11,28 @@
 				<table>
 					<thead>
 						<tr>
-							<th style="width: 32px"></th>
+							<th style="width: 18px"></th>
 							<th>Name</th>
 							<th>Last Done</th>
 							<th>Priority</th>
 							<th>Score</th>
+							<th>Claimed</th>
 							<th style="width: 106px"></th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($r->chores as $c)
-						<tr class="chore" onclick="window.location.href='{{\URL::route('chores.claim', $c->id)}}'">
+						<tr class="chore" onclick="rowLink('{{\URL::route('chores.claim', $c->id)}}')">
 							<td><span class="chore-alert danger"></span></td>
 							<td>{{$c->name}}</td>
 							<td>{{$c->daysString()}}</td>
 							<td>{{$c->priority()}}</td>
 							<td>{{$c->score()}}</td>
+							<td>{{$c->claimer()}}</td>
 							<td>
 								<button href="#" data-dropdown="drop-chore-{{$c->id}}" aria-controls="drop-chore-{{$c->id}}" aria-expanded="false" class="button secondary dropdown tiny right">Options</button>
 								<ul id="drop-chore-{{$c->id}}" data-dropdown-content class="f-dropdown" aria-hidden="true" tabindex="-1">
-									<li><a href="#">This is a link</a></li>
-								 	<li><a href="#">This is another</a></li>
-								 	<li><a href="#">Yet another</a></li>
+									<li><a href="{{\URL::route('chores.claim', $c->id)}}">Claim This Chore</a></li>
 								</ul>
 							</td>
 						</tr>
@@ -47,7 +47,27 @@
 </div>
 
 <script type="text/javascript">
+	
+	function rowLink(url)
+	{
+		if(!buttonClick)
+			window.location.href = url;
+	}
 
+	var buttonClick = false;
+	$("button[data-dropdown]").click(function(){
+		buttonClick = true;
+		setTimeout(function(){
+			buttonClick = false;
+		}, 500);
+	});
+
+	$("ul.f-dropdown li").click(function(){
+		buttonClick = true;
+		setTimeout(function(){
+			buttonClick = false;
+		}, 500);
+	})
 </script>
 
 @stop

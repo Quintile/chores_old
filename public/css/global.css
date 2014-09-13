@@ -279,11 +279,20 @@ tr.chore {
 	cursor: pointer;
 }
 
+tr.chore:hover {
+	background-color: #EEE;
+}
+
+tr.chore > td {
+	padding: 0;
+}
+
 tr.chore > td > button.tiny {
 	margin: 0;
 	font-size: 12px;
 	padding-top: 3px;
 	padding-bottom: 3px;
+	width: 100%;
 }
 
 .chore .chore-alert {

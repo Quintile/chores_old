@@ -86,6 +86,14 @@ class Chore extends Eloquent
 		$this->claim_id = \Auth::user()->id;
 		$this->save();
 	}
+
+	public function claimer()
+	{
+		$user = \User::find($this->claim_id);
+		if($user)
+			return $user->name;
+		return null;
+	}
 /*
 	public function urgency()
 	{
