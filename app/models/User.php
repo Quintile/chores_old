@@ -31,6 +31,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return false;
 	}
 
+	public function generators()
+	{
+		return $this->belongsToMany('Generator');
+	}
+
 	public function households()
 	{
 		return $this->belongsToMany('Household');
