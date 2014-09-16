@@ -36,6 +36,11 @@ class Household extends Eloquent
 		return $this->hasMany('Room');
 	}
 
+	public function generator()
+	{
+		return $this->hasOne('Generator');
+	}
+
 	public function isActiveHousehold()
 	{
 		return ($this->id === \Auth::user()->household_id);

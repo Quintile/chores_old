@@ -1,9 +1,17 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,300);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,300,500);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700);
 @import url(http://fonts.googleapis.com/css?family=Trocchi);
 
 html {
 	font-size: 14px !important;
+}
+
+span.title-1 {
+	font-weight: 700;
+}
+
+span.title-2 {
+	
 }
 
 #login {
@@ -12,7 +20,7 @@ html {
 
 .top-bar .name h1 a{
 	font-family: 'Open Sans Condensed', sans-serif;
-	font-size: 26px;
+	font-size: 34px;
 }
 
 .user-menu a{
@@ -52,6 +60,7 @@ html {
 #content {
 	margin-left: 160px;
 	padding: 0 20px;
+	position: relative;
 }
 
 #content .dont-clear .dont-clear:after {
@@ -63,8 +72,7 @@ html {
 }
 
 p {
-	font-size: 14px !important;
-	font-family: 'Open Sans', sans-serif !important;
+	font-family: 'Open Sans', sans-serif;
 }
 
 /* MANAGE HOUSEHOLDS */
@@ -79,8 +87,11 @@ p {
 	padding: 5px 10px;
 	margin: 20px;
 	border: 1px solid #ccc;
-	box-shadow: 1px 1px 3px #000;
+	
+}
 
+#manage-households li.household p {
+	font-size: 12px;
 }
 
 #manage-households .household-title {
@@ -139,6 +150,33 @@ p {
 	margin-left: 8px;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 700;
+}
+
+.generator-toggle {
+	margin-top: 14px;
+}
+
+.generator-status {
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+.generator-status-off {
+	color: red;
+}
+
+.generator-status-on {
+	color: green;
+}
+
+.generator-sub > label{
+	font-weight: bold;
+	margin-left: 10px;
+}
+
+.generator-sub > label > input {
+	position: relative;
+	top: 2px;
 }
 
 /* MODALS */
@@ -275,38 +313,104 @@ ul.chore-list > li .chore td {
 	font-family: "Open Sans", sans-serif;
 }
 
-tr.chore {
+ul.chore-list th {
+	text-align: center;
+}
+
+table.chore-table tr.chore {
 	cursor: pointer;
 }
 
-tr.chore:hover {
+table.chore-table tr.claimed {
+	color: #333;
+}
+
+table.chore-table tr.chore td.chore-claimed-name {
+	text-align: right;
+}
+
+table.chore-table tr.chore:hover {
 	background-color: #EEE;
 }
 
-tr.chore > td {
-	padding: 0;
+table.chore-table tr.chore > td {
+	padding: 0 5px;
+	font-family: "Open Sans", sans-serif;
 }
 
-tr.chore > td > button.tiny {
+table.chore-table tr.chore > td > .tiny {
 	margin: 0;
-	font-size: 12px;
+	font-size: 11px;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	width: 100%;
+	font-family: "Open Sans", sans-serif;
+	font-weight: 700;
 }
 
-.chore .chore-alert {
-	width: 16px;
-	height: 16px;
-	border: 1px solid #999;
+table.chore-table tr.chore > td.chore-status {
+	text-align: center;
+}
+
+table.chore-table tr.chore .chore-alert {
+	width: 8px;
+	height: 8px;
 	display: inline-block;
-	box-shadow: 0px 1px 3px #999;
+	margin: 0 auto;
+	box-shadow: 1px 1px 1px #CCC;
 }
 
-.chore .success {
+table.chore-table tr.chore .success {
 	background-image: linear-gradient(to right bottom, #94F291 0%, #149136 100%);
 }
 
-.chore .danger {
-	background-image: linear-gradient(to right bottom, #FF5959 0%, #8A0707 100%);
+table.chore-table tr.chore .danger {
+	background-color: #e9001b;
+}
+
+table.chore-table tr.chore > td.number {
+	text-align: right;
+}
+
+table.chore-table tr.chore-claim {
+	display: block;
+}
+
+/* ALERTS */
+#alert {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	min-width: 250px;
+	z-index: 999;
+	box-shadow: 0px 2px 5px #333;
+	border: 1px solid #CCC;
+	padding: 5px 10px;
+	display: none;
+}
+
+#alert h1 {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	color: inherit;
+	font-family: "Open Sans Condensed", sans-serif;
+}
+
+#alert p {
+	margin-bottom: 0px;
+	font-family: "Open Sans", sans-serif;
+	font-size: 13px;
+}
+
+.alert-success {
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+}
+
+.alert-error {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
 }

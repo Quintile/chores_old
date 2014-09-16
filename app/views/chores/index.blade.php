@@ -8,13 +8,12 @@
 			@if($r->chores()->count() > 0)
 			<li>
 				<h1>{{$r->name}}</h1>
-				<table>
+				<table class="chore-table">
 					<thead>
 						<tr>
 							<th style="width: 18px"></th>
 							<th>Name</th>
 							<th>Last Done</th>
-							<th>Priority</th>
 							<th>Score</th>
 							<th>Claimed</th>
 							<th style="width: 106px"></th>
@@ -22,13 +21,16 @@
 					</thead>
 					<tbody>
 						@foreach($r->chores as $c)
-						<tr class="chore" onclick="rowLink('{{\URL::route('chores.claim', $c->id)}}')">
-							<td><span class="chore-alert danger"></span></td>
+						<tr class="chore @if($c->claimer()) claimed @endif">
+							<td class="chore-status"><span class="chore-alert danger"></span></td>
 							<td>{{$c->name}}</td>
 							<td>{{$c->daysString()}}</td>
-							<td>{{$c->priority()}}</td>
-							<td>{{$c->score()}}</td>
-							<td>{{$c->claimer()}}</td>
+							<td class="number">{{$c->score()}}</td>
+							@if($c->claimer())
+								<td class="chore-claimed-name">{{$c->claimer()}}</td>
+							@else
+								<td><a href="{{\URL::route('chores.claim', $c->id)}}" class="button secondary tiny right">Claim This Chore</a></td>
+							@endif
 							<td>
 								<button href="#" data-dropdown="drop-chore-{{$c->id}}" aria-controls="drop-chore-{{$c->id}}" aria-expanded="false" class="button secondary dropdown tiny right">Options</button>
 								<ul id="drop-chore-{{$c->id}}" data-dropdown-content class="f-dropdown" aria-hidden="true" tabindex="-1">
@@ -48,26 +50,7 @@
 
 <script type="text/javascript">
 	
-	function rowLink(url)
-	{
-		if(!buttonClick)
-			window.location.href = url;
-	}
 
-	var buttonClick = false;
-	$("button[data-dropdown]").click(function(){
-		buttonClick = true;
-		setTimeout(function(){
-			buttonClick = false;
-		}, 500);
-	});
-
-	$("ul.f-dropdown li").click(function(){
-		buttonClick = true;
-		setTimeout(function(){
-			buttonClick = false;
-		}, 500);
-	})
 </script>
 
 @stop

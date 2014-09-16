@@ -32,35 +32,37 @@
 				<div class="row">
 					<div class="medium-12 columns">
 						<h4>Settings</h4>
-						<div class="small-3 columns">
-							<label>
-								Chore Importance
-								<select id="household-pref-importance" @if(!$h->isAdmin(\Auth::user()->id)) disabled @endif>
-									<option value="creator" @if(\Preference::check('household-pref-importance') == 'creator') selected @endif>Set By Creator</option>
-									<option value="average" @if(\Preference::check('household-pref-importance') == 'average') selected @endif>Set By Average</option>
-								</select>
-							</label>
-							<div class="response-wrapper">
-								<div class="ajax-response-importance ajax-response"></div>
+						<div class="row">
+							<div class="small-3 columns">
+								<label>
+									Chore Importance
+									<select id="household-pref-importance" @if(!$h->isAdmin(\Auth::user()->id)) disabled @endif>
+										<option value="creator" @if(\Preference::check('household-pref-importance') == 'creator') selected @endif>Set By Creator</option>
+										<option value="average" @if(\Preference::check('household-pref-importance') == 'average') selected @endif>Set By Average</option>
+									</select>
+								</label>
+								<div class="response-wrapper">
+									<div class="ajax-response-importance ajax-response"></div>
+								</div>
 							</div>
-						</div>
-						<div class="small-3 columns">
-							<label>
-								Editing
-								<select id="household-pref-editing" @if(!$h->isAdmin(\Auth::user()->id)) disabled @endif>
-									<option value="owner" @if(\Preference::check('household-pref-editing') == 'owner') selected @endif>By Owner Only</option>
-									<option value="members" @if(\Preference::check('household-pref-editing') == 'members') selected @endif>By Household Members</option>
-								</select>
-							</label>
-							<div class="response-wrapper">
-								<div class="ajax-response-editing ajax-response"></div>
+							<div class="small-3 columns">
+								<label>
+									Editing
+									<select id="household-pref-editing" @if(!$h->isAdmin(\Auth::user()->id)) disabled @endif>
+										<option value="owner" @if(\Preference::check('household-pref-editing') == 'owner') selected @endif>By Owner Only</option>
+										<option value="members" @if(\Preference::check('household-pref-editing') == 'members') selected @endif>By Household Members</option>
+									</select>
+								</label>
+								<div class="response-wrapper">
+									<div class="ajax-response-editing ajax-response"></div>
+								</div>
 							</div>
-						</div>
-						<div class="small-3 columns">
+							<div class="small-3 columns">
 
-						</div>
-						<div class="small-3 columns">
+							</div>
+							<div class="small-3 columns">
 
+							</div>
 						</div>
 					</div>
 				</div>
@@ -116,7 +118,52 @@
 						<p>Coming Soon...</p>
 					</div>
 				</div>
-
+				<div class="row">
+					<div class="medium-12 columns">
+						<h4 id="gen-{{$h->id}}">Generator</h4>
+						<p>The generator for a household is a tool that can be used to automatically assign a set number of chores to each member of the household per day, offering rewards to those that complete 
+						all of their assigned chores. This generator can be configured below.</p>
+						<div class="generator-status">
+							{{ ($h->generator->active) ? '<span class="generator-status-on">This generator is active.</span>' : '<span class="generator-status-off">This generator is inactive.</span>'}}
+						</div>
+						<form action="{{\URL::route('households.generator.settings', $h->id)}}" method="post">
+							<div class="row">
+								<div class="medium-3 columns">
+									<label>
+										Type
+										<select name="generator-type">
+											<option value="duration" @if($h->generator->type == "duration") selected @endif>
+												Duration (Minutes)
+											</option>
+											<option value="count" @if($h->generator->type == "count") selected @endif>Number of Chores</option>
+										</select>
+									</label>
+								</div>
+								<div class="medium-3 columns">
+									<label>
+										Maximum
+										<input type="number" min="1" value="{{$h->generator->max}}" name="generator-max" />
+									</label>
+								</div>
+								<div class="medium-6 columns">
+									<button class="button generator-toggle small">Save Settings</button>
+									<a class="button generator-toggle small @if($h->generator->active) alert @endif " href="{{\URL::route('households.generator', $h->id)}}">Turn {{($h->generator->active) ? "Off" : "On"}}</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="row">
+					<div class="medium-12 columns">
+						<h4>Generator Subscription</h4>
+						<p>You can subscribe to a household generator to recieve emails when the household generates chores for it's users, indicating which chores you were assigned to.</p>
+						<form class="generator-sub">
+							<label>
+								<input type="checkbox" id="generator-sub-check" /> Subscribe To This Generator
+							</label>
+						</form>
+					</div>
+				</div>
 			</li>
 		@endforeach
 		</ol>
@@ -152,6 +199,8 @@
 				});
 			});
 		});
+
+		
 	});
 </script>
 

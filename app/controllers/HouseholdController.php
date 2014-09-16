@@ -33,6 +33,11 @@ class HouseholdController extends \BaseController
 			$user->save();
 		}
 
+		$generator = new \Generator();
+		$generator->household_id = $household->id;
+		$generator->save();
+
+
 		return \Redirect::route('households.manage');
 	}
 
@@ -70,7 +75,7 @@ class HouseholdController extends \BaseController
 			else
 			{
 				//If the user is the only member, delete the household
-				$household->delete();
+				$this->delete($household->id);
 			}
 		}
 
@@ -118,6 +123,13 @@ class HouseholdController extends \BaseController
 			$u->save();
 		}
 
+		//Generators
+		$generators = \Generators::where('household_id', $household->id)->get();
+		foreach($generators as $g)
+		{
+			$g->delete();
+		}
+
 		$household->delete();
 
 		return \Redirect::back()->with('flash_message', 'Household permanently deleted');
@@ -127,11 +139,39 @@ class HouseholdController extends \BaseController
 	{
 		$user = \User::find($user_id);
 		if(!$user->belongsToHousehold($id))
-			return \Redirect::back()->with('flash_message', 'That user does not belong to that household');
+			return \Redirect::back()->with('error', 'That user does not belong to that household');
 		$household = \Household::find($id);
 		$household->admin_id = $user_id;
 		$household->save();
-		return \Redirect::back()->with('flash_message', 'Admin has moved to '.$user->name);
+		return \Redirect::back()->with('success', 'Admin has moved to '.$user->name);
 	}
 
+	public function generator($id)
+	{
+		$household = \Household::find($id);
+		if(!$household->isAdmin(\Auth::user()->id))
+			return \Redirect::to(\URL::previous()."#gen-".$id)->with('error', 'You do not have permission to do that');
+		$toggle = $household->generator->toggle();
+
+		if($toggle)
+			return \Redirect::to(\URL::previous()."#gen-".$id)->with('success', 'Generator has been toggled successfully');
+		else
+			return \Redirect::to(\URL::previous()."#gen-".$id)->with('error', 'Unable to toggle generator. Save valid settings before toggling');
+
+	}
+
+	public function genSettings($id)
+	{
+		$household = \Household::find($id);
+		if(!$household->isAdmin(\Auth::user()->id))
+			return \Redirect::to(\URL::previous()."#gen-".$id)->with('error', 'You do not have permission to do that');
+
+		$household->generator->type = \Input::get('generator-type');
+		$household->generator->max = \Input::get('generator-max');
+		if(!$household->generator->isValid())
+			return \Redirect::to(\URL::previous()."#gen-".$id)->with('error', 'Invalid values supplied for generator settings');
+
+		$household->generator->save();
+		return \Redirect::to(\URL::previous()."#gen-".$id)->with('success', 'Successfully updated generator settings');
+	}
 }

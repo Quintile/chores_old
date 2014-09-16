@@ -20,15 +20,6 @@
 		</div>
 		@endif
 		<div id="content" @if(!\Auth::check()) style="margin: 0" @endif>
-		  	@if(Session::get('flash_message'))
-		  	<div class="row dont-clear">
-				<div data-alert class="alert-box info radius medium-12 columns">
-					{{ Session::get('flash_message') }}
-					<a href="#" class="close">&times;</a>
-				</div>
-			</div>
-			@endif
-
 			@yield('content')
 		</div>
 		
@@ -45,5 +36,6 @@
 
 		<!-- Individual yield modals -->
 		@yield('modals')
+		@include('layouts.alerts')
 	</body>
 </html>

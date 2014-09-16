@@ -35,6 +35,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('households/{id}/active', array('as' => 'households.active', 'uses' => '\Controllers\HouseholdController@activate'));
 	Route::get('households/{id}/delete', array('as' => 'households.delete', 'uses' => '\Controllers\HouseholdController@delete'));
 	Route::get('households/{id}/admin/{user}', array('as' => 'households.admin', 'uses' => '\Controllers\HouseholdController@admin'));
+	Route::get('households/{id}/generator', array('as' => 'households.generator', 'uses' => '\Controllers\HouseholdController@generator'));
+	Route::post('households/{id}/generator', array('as' => 'households.generator.settings', 'uses' => '\Controllers\HouseholdController@genSettings'));
 	
 	//Invites
 	Route::post('households/invite', array('as' => 'households.invite', 'uses' => '\Controllers\InviteController@invite'));
