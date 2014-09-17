@@ -33,7 +33,7 @@ class HouseholdController extends \BaseController
 			$user->save();
 		}
 
-		$generator = new \Generator();
+		$generator = new \Chores\Generator();
 		$generator->household_id = $household->id;
 		$generator->save();
 
@@ -124,7 +124,7 @@ class HouseholdController extends \BaseController
 		}
 
 		//Generators
-		$generators = \Generators::where('household_id', $household->id)->get();
+		$generators = \Chores\Generators::where('household_id', $household->id)->get();
 		foreach($generators as $g)
 		{
 			$g->delete();
@@ -177,10 +177,13 @@ class HouseholdController extends \BaseController
 
 	public function genToggle()
 	{
+
 		if(\Input::get('value') == "true")
 		{
+
 			$genUser = \GeneratorUser::where('generator_id', \Household::find(\Input::get('household'))->generator->id)
 						->where('user_id', \Auth::user()->id)->first();
+
 			if($genUser)
 			{
 				$genUser->active = true;
@@ -189,18 +192,24 @@ class HouseholdController extends \BaseController
 			else
 			{
 				$genUser = new \GeneratorUser();
-				$genUser->generator_id = \Household::find(\Input::get('household'))->generator->id;
+				$household = \Household::find(\Input::get('household'));
+				$genUser->generator_id = $household->generator->id;
 				$genUser->user_id = \Auth::user()->id;
+				$genUser->active = 1;
 				$genUser->save();
 			}
 			
 		}
 		else
 		{
-			$genUser = \GeneratorUser::where('generator_id', \Household::find(\Input::get('household'))->generator->id)
+			$household = \Household::find(\Input::get('household'));
+			$genUser = \GeneratorUser::where('generator_id', $household->generator->id)
 						->where('user_id', \Auth::user()->id)->first();
+			if(!$genUser)
+				exit;
 			$genUser->active = false;
 			$genUser->save();
+		
 		}
 		
 	}

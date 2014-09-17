@@ -38,7 +38,7 @@ class Household extends Eloquent
 
 	public function generator()
 	{
-		return $this->hasOne('Generator');
+		return $this->hasOne('\Chores\Generator');
 	}
 
 	public function isActiveHousehold()

@@ -33,7 +33,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function generators()
 	{
-		return $this->belongsToMany('Generator');
+		return $this->belongsToMany('\Chores\Generator');
 	}
 
 	public function households()

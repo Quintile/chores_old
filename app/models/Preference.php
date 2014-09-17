@@ -23,7 +23,12 @@ class Preference extends \Eloquent
 			$user_id = \Auth::user()->id;
 		
 		if(is_null($household_id))
-			$household_id = \Auth::user()->activeHousehold()->id;
+		{
+			if(\Auth::user()->activeHousehold())
+				$household_id = \Auth::user()->activeHousehold()->id;
+			else
+				return null;
+		}
 
 		$result = Preference::where('pref', $pref)->where('user_id', $user_id)->first();
 

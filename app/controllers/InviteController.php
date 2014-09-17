@@ -28,7 +28,7 @@ class InviteController extends \BaseController
 
 		$invite->email();
 
-		return \Redirect::back()->with('flash_message', 'User has been invited and membership is pending');
+		return \Redirect::back()->with('success', 'User has been invited and membership is pending');
 
 	}
 

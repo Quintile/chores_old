@@ -4,6 +4,8 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+use Chores\Generator;
+
 class generate extends Command {
 
 	/**
@@ -39,7 +41,8 @@ class generate extends Command {
 	{
 		$this->info('Generating...');
 
-		$generators = \Generator::where('active', true)->get();
+		
+		$generators = Generator::where('active', true)->get();
 		foreach($generators as $gen)
 		{
 			$this->info('Generating '.$gen->household->name);
