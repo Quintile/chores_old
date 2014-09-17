@@ -42,10 +42,7 @@ class Generator extends \Eloquent
 
 	public function generate()
 	{
-		foreach($this->household->users as $u)
-		{
-			
-		}
+
 	}
 
 	public function subscribes($userid = null)
