@@ -13,6 +13,11 @@ class Generator extends \Eloquent
 		return $this->belongsTo('Household');
 	}
 
+	public function users()
+	{
+		return $this->belongsToMany('User');
+	}
+
 	public function toggle()
 	{
 		if(!$this->isValid())
@@ -31,5 +36,10 @@ class Generator extends \Eloquent
 
 		$this->errors = $validation->messages();
 		return false;
+	}
+
+	public function generate()
+	{
+		
 	}
 }

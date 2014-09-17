@@ -174,4 +174,34 @@ class HouseholdController extends \BaseController
 		$household->generator->save();
 		return \Redirect::to(\URL::previous()."#gen-".$id)->with('success', 'Successfully updated generator settings');
 	}
+
+	public function genToggle()
+	{
+		if(\Input::get('value') == "true")
+		{
+			$genUser = \GeneratorUser::where('generator_id', \Household::find(\Input::get('household'))->generator->id)
+						->where('user_id', \Auth::user()->id)->first();
+			if($genUser)
+			{
+				$genUser->active = true;
+				$genUser->save();
+			}
+			else
+			{
+				$genUser = new \GeneratorUser();
+				$genUser->generator_id = \Household::find(\Input::get('household'))->generator->id;
+				$genUser->user_id = \Auth::user()->id;
+				$genUser->save();
+			}
+			
+		}
+		else
+		{
+			$genUser = \GeneratorUser::where('generator_id', \Household::find(\Input::get('household'))->generator->id)
+						->where('user_id', \Auth::user()->id)->first();
+			$genUser->active = false;
+			$genUser->save();
+		}
+		
+	}
 }

@@ -159,7 +159,7 @@
 						<p>You can subscribe to a household generator to recieve emails when the household generates chores for it's users, indicating which chores you were assigned to.</p>
 						<form class="generator-sub">
 							<label>
-								<input type="checkbox" id="generator-sub-check" /> Subscribe To This Generator
+								<input type="checkbox" id="generator-sub-check" data-household-id="{{$h->id}}" /> Subscribe To This Generator
 							</label>
 						</form>
 					</div>
@@ -197,6 +197,15 @@
 						$(element).removeClass('ajax-success');
 					});
 				});
+			});
+		});
+
+		$("#generator-sub-check").click(function(){
+			var element = $(this);
+			var posting = $.post( '{{\URL::route("generators.ajax")}}', {'household': $(this).attr('data-household-id'), 'value': $(this).prop('checked')});
+			console.log($(this).val());
+			posting.done(function(data){
+				
 			});
 		});
 

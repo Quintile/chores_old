@@ -12,3 +12,4 @@
 */
 
 Artisan::add(new import());
+Artisan::add(new generate());

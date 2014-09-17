@@ -53,4 +53,7 @@ Route::group(array('before' => 'auth'), function()
 	//Household Preferences
 	Route::post('preferences/household', array('as' => 'preferences.household.ajax', 'uses' => '\Controllers\PreferenceController@setHouse'));
 
+	//Generator
+	Route::post('households/generator', array('as' => 'generators.ajax', 'uses' => '\Controllers\HouseholdController@genToggle'));
+
 });
