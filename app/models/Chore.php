@@ -94,6 +94,20 @@ class Chore extends Eloquent
 			return $user->name;
 		return null;
 	}
+
+	public static function priorityCompare(\Chore $a, \Chore $b)
+	{
+		if($a->priority() == $b->priority())
+			return 0;
+		return ($a->priority() < $b->priority()) ? -1 : 1;
+	}
+
+	public static function priorityCompareDesc(\Chore $a, \Chore $b)
+	{
+		if($a->priority() == $b->priority())
+			return 0;
+		return ($b->priority() < $a->priority()) ? -1 : 1;
+	}
 /*
 	public function urgency()
 	{

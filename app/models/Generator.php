@@ -42,6 +42,8 @@ class Generator extends \Eloquent
 
 	public function generate()
 	{
+		//Get a pool of chores ordered by priority
+		$pool = $this->household->chorePool();
 
 	}
 

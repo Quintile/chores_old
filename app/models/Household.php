@@ -55,4 +55,23 @@ class Household extends Eloquent
 	{
 		return ($this->rooms()->count()) ? false : true;
 	}
+
+	public function chores()
+	{
+		return $this->hasManyThrough('\Chore', '\Room');
+	}
+
+	public function chorePool($ordering = 'DESC')
+	{
+		$chores = $this->chores;
+		$choreArray = array();
+		foreach($chores as $c)
+			$choreArray[] = $c;
+		
+		$sorter = ($ordering == 'DESC') ? '\Chore::priorityCompareDesc' : '\Chore::priorityCompareDesc';
+
+		usort($choreArray, $sorter);
+
+		return $choreArray;
+	}
 }

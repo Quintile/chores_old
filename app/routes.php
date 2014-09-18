@@ -57,3 +57,14 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('households/generator', array('as' => 'generators.ajax', 'uses' => '\Controllers\HouseholdController@genToggle'));
 
 });
+
+
+Route::get('testing', function(){
+	$pool = \Auth::user()->activeHousehold()->chorePool('DESC');
+	echo "<ol>";
+	foreach($pool as $p)
+	{
+		echo "<li>".$p->name."</li>";
+	}
+	echo "</ol>";
+});
