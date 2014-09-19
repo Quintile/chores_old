@@ -126,9 +126,8 @@ class HouseholdController extends \BaseController
 		//Generators
 		$generators = \Chores\Generators::where('household_id', $household->id)->get();
 		foreach($generators as $g)
-		{
 			$g->delete();
-		}
+		
 
 		$household->delete();
 
