@@ -19,7 +19,8 @@ class CreateAssignmentsTable extends Migration {
 			$table->integer('user_id');
 			$table->boolean('generated')->default(0);
 			$table->boolean('completed')->default(0);
-			$table->integer('log_id')->nullable();
+			$table->integer('score')->default(0);
+			$table->timestamp('completed_at')->nullable();
 			$table->timestamps();
 		});
 	}

@@ -19,9 +19,12 @@ class Preference extends \Eloquent
 
 	public static function check($pref, $user_id = null, $household_id = null)
 	{
+		if(is_null($user_id) && !\Auth::check())
+			return null;
+
 		if(is_null($user_id))
 			$user_id = \Auth::user()->id;
-		
+
 		if(is_null($household_id))
 		{
 			if(\Auth::user()->activeHousehold())

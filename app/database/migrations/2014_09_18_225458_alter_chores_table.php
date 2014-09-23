@@ -15,6 +15,14 @@ class AlterChoresTable extends Migration {
 		Schema::table('chores', function(Blueprint $table)
 		{
 			$table->dropColumn('claim_id');
+			$table->dropColumn('score');
+			$table->dropColumn('completed_at');
+
+		});
+
+		Schema::table('assignments', function(Blueprint $table)
+		{
+			$table->dropColumn('completed');
 		});
 	}
 
@@ -28,6 +36,13 @@ class AlterChoresTable extends Migration {
 		Schema::table('chores', function(Blueprint $table)
 		{
 			$table->integer('claim_id');
+			$table->integer('score');
+			$table->timestamp('completed_at');
+		});
+
+		Schema::table('assignments', function(Blueprint $table)
+		{
+			$table->boolean('completed')->default(0);
 		});
 	}
 

@@ -21,6 +21,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('chores/{id}/edit', array('as' => 'chores.edit.post', 'uses' => '\Controllers\ChoreController@edit'));
 	Route::get('chores', array('as' => 'chores', 'uses' => '\Controllers\ChoreController@index'));
 	Route::get('chores/{id}/claim', array('as' => 'chores.claim', 'uses' => '\Controllers\ChoreController@claim'));
+	Route::get('chores/{id}/finish', array('as' => 'chores.finish', 'uses' => '\Controllers\ChoreController@finish'));
 
 	//Rooms
 	Route::get('rooms', array('as' => 'rooms.index', 'uses' => '\Controllers\RoomController@index'));
@@ -56,15 +57,4 @@ Route::group(array('before' => 'auth'), function()
 	//Generator
 	Route::post('households/generator', array('as' => 'generators.ajax', 'uses' => '\Controllers\HouseholdController@genToggle'));
 
-});
-
-
-Route::get('testing', function(){
-	$pool = \Auth::user()->activeHousehold()->chorePool('DESC');
-	echo "<ol>";
-	foreach($pool as $p)
-	{
-		echo "<li>".$p->name."</li>";
-	}
-	echo "</ol>";
 });

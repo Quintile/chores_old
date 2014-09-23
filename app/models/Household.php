@@ -64,10 +64,16 @@ class Household extends Eloquent
 	public function chorePool($ordering = 'DESC')
 	{
 		$chores = $this->chores;
+
 		$choreArray = array();
+	
 		foreach($chores as $c)
-			$choreArray[] = $c;
-		
+		{
+			
+			if($c->priority() >= 1.0)
+				$choreArray[] = $c;
+		}
+	
 		$sorter = ($ordering == 'DESC') ? '\Chore::priorityCompareDesc' : '\Chore::priorityCompareDesc';
 
 		usort($choreArray, $sorter);

@@ -309,6 +309,10 @@ ul.chore-list > li > h1 {
 	font-family: 'Trocchi', serif;
 }
 
+.f-dropdown {
+	font-weight: normal;
+}
+
 ul.chore-list > li .chore td {
 	font-family: "Open Sans", sans-serif;
 }
@@ -321,12 +325,20 @@ table.chore-table tr.chore {
 	cursor: pointer;
 }
 
-table.chore-table tr.claimed {
-	color: #333;
+table.chore-table tr.self-claimed > td {
+	font-weight: bold;
+}
+
+table.chore-table tr.other-claimed > td {
+	color: #666;
+}
+
+table.chore-table tr.finished > td{
+	color: #CCC;
 }
 
 table.chore-table tr.chore td.chore-claimed-name {
-	text-align: right;
+	padding-left: 15px;
 }
 
 table.chore-table tr.chore:hover {
@@ -360,8 +372,8 @@ table.chore-table tr.chore .chore-alert {
 	box-shadow: 1px 1px 1px #CCC;
 }
 
-table.chore-table tr.chore .success {
-	background-image: linear-gradient(to right bottom, #94F291 0%, #149136 100%);
+table.chore-table tr.chore .warning {
+	background-color: orange;
 }
 
 table.chore-table tr.chore .danger {

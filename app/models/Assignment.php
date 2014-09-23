@@ -6,6 +6,11 @@ class Assignment extends \Eloquent
 
 	public function chore()
 	{
-		return $this->hasOne('\Chore');
+		return $this->belongsTo('\Chore');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('\User');
 	}
 }

@@ -72,6 +72,36 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}
 
+	public function assigned($generatorOnly = false)
+	{
+		$household_id = $this->activeHousehold()->id;
+
+		$results = \Assignment::whereNull('completed_at')->where('user_id', $this->id)->where('created_at', 'LIKE', with(new \DateTime())->format('Y-m-d').'%');
+		if($generatorOnly)
+			$results = $results->where('generated', true);
+
+		$results = $results->get();
+		return $results;		
+		$specific = array();
+
+		return $specific;
+	}
+
+	public function assignedTotal($property)
+	{
+		if($property == "count")
+			return count($this->assigned(true));
+
+		$total = 0;
+		foreach($this->assigned(true) as $assignment)
+		{
+			$total += $assignment->chore->$property;
+		}
+
+		return $total;
+	}
+
+
 	public function activeHousehold()
 	{
 		return \Household::where('id', $this->household_id)->first();

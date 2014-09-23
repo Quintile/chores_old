@@ -39,7 +39,7 @@ class ChoreController extends \BaseController
 		//Store the last used room in the preferences
 		\Preference::set('create-chore-lastroom', $chore->room_id);
 
-		return \Redirect::back()->with('flash_message', 'You have successfully created a chore');
+		return \Redirect::back()->with('success', 'You have successfully created a chore');
 	}
 
 	public function delete($id)
@@ -48,16 +48,16 @@ class ChoreController extends \BaseController
 		if($chore->user_id == \Auth::user()->id)
 		{
 			$chore->delete();
-			return \Redirect::back()->with('flash_message', 'Chore successfully deleted');
+			return \Redirect::back()->with('success', 'Chore successfully deleted');
 		}
 
 		if($chore->room->household->isAdmin(\Auth::user()->id))
 		{
 			$chore->delete();
-			return \Redirect::back()->with('flash_message', 'Chore successfully deleted');
+			return \Redirect::back()->with('success', 'Chore successfully deleted');
 		}
 
-		return \Redirect::back()->with('flash_message', 'You do not have permission to do that');
+		return \Redirect::back()->with('error', 'You do not have permission to do that');
 	}
 
 	public function edit($id)
@@ -72,7 +72,7 @@ class ChoreController extends \BaseController
 
 		//Handle importance
 		if(\Input::get('chore-importance') == '')
-			return \Redirect::back()->with('flash_message', 'Chore successfully edited');
+			return \Redirect::back()->with('success', 'Chore successfully edited');
 
 		$importance = \Importance::where('chore_id', $chore->id)->where('user_id', \Auth::user()->id)->first();
 	
@@ -83,7 +83,7 @@ class ChoreController extends \BaseController
 		
 		$importance->save();
 
-		return \Redirect::back()->with('flash_message', 'Chore successfully edited');
+		return \Redirect::back()->with('success', 'Chore successfully edited');
 	}
 
 	public function claim($id)
@@ -91,6 +91,15 @@ class ChoreController extends \BaseController
 		$chore = \Chore::find($id);
 		$chore->claim();
 
-		return \Redirect::back()->with('flash_message', 'You have claimed a chore');
+		return \Redirect::back()->with('success', 'You have claimed a chore');
+	}
+
+	public function finish($id)
+	{
+		$chore = \Chore::find($id);
+		$chore->claim();
+
+		$chore->finish();
+		return \Redirect::back()->with('success', 'You have finished a chore');
 	}
 }

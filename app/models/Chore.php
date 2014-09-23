@@ -26,12 +26,15 @@ class Chore extends Eloquent
 		return $this->hasOne('\User');
 	}
 
+	public function assignments()
+	{
+		return $this->hasMany('\Assignment');
+	}
+
 	private function lastDone()
 	{
-		$log = \ChoreLog::where('chore_id', $this->id)->
-							orderBy('created_at', 'DESC')->
-							first();
-		return ($log) ? $log->created_at : null;
+		$assignment = \Assignment::where('chore_id', $this->id)->whereNotNull('completed_at')->orderBy('completed_at', 'DESC')->first();
+		return ($assignment) ? $assignment->completed_at : null;
 	}
 
 	public function days()
@@ -57,6 +60,19 @@ class Chore extends Eloquent
 			return $days." Days";
 	}
 
+	public function doneToday()
+	{
+		return ($this->days() === '0') ? true : false;
+	}
+
+	public function lastDoneBy()
+	{
+		$assignment = $this->assignments()->orderBy('completed_at', 'DESC')->first();
+		if($assignment)
+			return $assignment->user->name;
+		return null;
+	}
+
 	public function priority()
 	{
 		//Grab the days since its been last done
@@ -78,20 +94,41 @@ class Chore extends Eloquent
 
 	public function score()
 	{
-		return round($this->priority() * 1050.50);
+		return round($this->priority() * 100.50);
 	}
 
-	public function claim()
+	public function claim($user_id = null, $generated = false)
 	{
-		$this->claim_id = \Auth::user()->id;
-		$this->save();
+
+		if(is_null($user_id))
+			$user_id = \Auth::user()->id;
+
+		//Check if the user has already claimed the chore
+		$assignment = \Assignment::where('user_id', $user_id)
+						->where('chore_id', $this->id)
+						->where('created_at', 'LIKE', with(new DateTime())->format('Y-m-d').'%')
+						->first();
+		
+		if($assignment)
+			return false;
+
+		$assignment = new \Assignment();
+		$assignment->chore_id = $this->id;
+		$assignment->user_id = $user_id;
+		$assignment->generated = $generated;
+		$assignment->save();
+
+		return true;
+		
 	}
 
 	public function claimer()
 	{
-		$user = \User::find($this->claim_id);
-		if($user)
-			return $user->name;
+
+		$assignment = \Assignment::where('chore_id', $this->id)->whereNull('completed_at')->where('created_at', 'LIKE', with(new \DateTime())->format('Y-m-d').'%')->first();
+		if($assignment)
+			return $assignment->user->name;
+		
 		return null;
 	}
 
@@ -107,6 +144,37 @@ class Chore extends Eloquent
 		if($a->priority() == $b->priority())
 			return 0;
 		return ($b->priority() < $a->priority()) ? -1 : 1;
+	}
+
+	public function finish($user_id = null)
+	{
+		if(is_null($user_id))
+			$user_id = \Auth::user()->id;
+
+		//Check if the user has already claimed the chore
+		$assignment = \Assignment::where('user_id', $user_id)
+						->where('chore_id', $this->id)
+						->where('created_at', 'LIKE', with(new DateTime())->format('Y-m-d').'%')
+						->first();
+		if(!$assignment)
+			return false;
+
+		$assignment->score = $this->score();
+		$assignment->completed_at = with(new DateTime())->format('Y-m-d G:i:s');
+		$assignment->save();
+
+		return \Redirect::back()->with('success', 'Successfully finished a chore');
+	}
+
+	public function alertStatus()
+	{
+		$priority = $this->priority();
+		if($priority >= 1)
+			return 'danger';
+		if($priority >= 0.8)
+			return 'warning';
+		if($priority < 0.8)
+			return null;
 	}
 /*
 	public function urgency()
