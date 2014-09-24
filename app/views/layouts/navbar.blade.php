@@ -17,6 +17,8 @@
         </ul>
       </li>
     </ul>
+    <div class="right" style="color: #FFF; font-family: 'Open Sans Condensed'; font-size: 24px; margin-right: 20px">{{number_format(2342)}}</div>
+    
     @endif
   </section>
 </nav>
