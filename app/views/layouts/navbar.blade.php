@@ -17,8 +17,54 @@
         </ul>
       </li>
     </ul>
-    <div class="right" style="color: #FFF; font-family: 'Open Sans Condensed'; font-size: 24px; margin-right: 20px">{{number_format(2342)}}</div>
-    
+    <div class="right user-score" style="color: #FFF; font-family: 'Open Sans Condensed'; font-size: 24px; margin-right: 20px">Week: {{number_format(\Auth::user()->score())}}</div>
     @endif
   </section>
 </nav>
+
+<script type="text/javascript">
+
+     var week = '{{number_format(\Auth::user()->score())}}';
+      var all = '{{number_format(\Auth::user()->scoreAllTime())}}';
+      var flag = true;
+      var timeout = 20000;
+
+    function scoreLoop(){
+
+        setTimeout(function(){
+            if(flag)
+        {
+            timeout = 5000;
+            $('.user-score').fadeOut(1000, function(){
+                $('.user-score').text('All Time: '+all);
+                flag = false;
+                $('.user-score').fadeIn(500, scoreLoop);
+            });
+           
+        }
+        else
+        {
+            timeout = 10000;
+            $('.user-score').fadeOut(1000, function(){
+                $('.user-score').text('Week: '+week);
+                flag = true;
+                $('.user-score').fadeIn(500, scoreLoop);
+            });
+            
+        }
+           
+    }, timeout);
+
+        
+
+    }
+
+    $(document).ready(function(){
+
+     
+
+         scoreLoop();
+    
+    });
+
+</script>

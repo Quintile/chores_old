@@ -41,6 +41,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Household');
 	}
 
+	public function assignments()
+	{
+		return $this->hasMany('\Assignment');
+	}
+
 	public function invites()
 	{
 		return $this->hasMany('Invite');
@@ -120,5 +125,24 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			return true;
 		else
 			return false;
+	}
+
+	public function score()
+	{
+		$score = 0;
+		$assignments = $this->assignments()->whereNotNull('completed_at')->where('created_at', '>', with(new \DateTime('Last Sunday'))->format('Y-m-d'))->get();
+		foreach($assignments as $ass)
+			$score += $ass->score;
+	
+		return $score;
+	}
+
+	public function scoreAllTime()
+	{
+		$score = 0;
+		$assignments = $this->assignments()->whereNotNull('completed_at')->get();
+		foreach($assignments as $ass)
+			$score += $ass->score;
+		return $score;
 	}
 }
