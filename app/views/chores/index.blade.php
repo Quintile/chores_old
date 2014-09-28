@@ -16,6 +16,7 @@
 							<th>Last Done</th>
 							<th>Score</th>
 							<th>Priority</th>
+							<th>Importance</th>
 							<th>Claimed</th>
 							<th style="width: 106px"></th>
 						</tr>
@@ -28,6 +29,7 @@
 							<td>{{$c->daysString()}}</td>
 							<td class="number">{{$c->score()}}</td>
 							<td class="number">{{$c->priority()}}</td>
+							<td>{{$c->importance()}}</td>
 							@if($c->doneToday())
 								<td class="chore-claimed-name">{{$c->lastDoneBy()}} (Done)</td>
 							@elseif($c->claimer())

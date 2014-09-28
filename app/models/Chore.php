@@ -94,7 +94,14 @@ class Chore extends Eloquent
 
 	public function score()
 	{
-		return round($this->priority() * 100.50);
+		//return ($this->priority() * 100 - ((($this->duration / 2.0) / 10.0)) );
+		//return ($this->duration/2*2dasdfsdfsdf * $this->priority() * ($this->frequency*25)) * $this->frequency;
+		$days = (is_null($this->days())) ? $this->frequency : $this->days();
+		$score = ($this->priority() * 100 + (round($this->duration / 10.0)) + $days);
+		if($this->frequency == 1)
+			return $score / 2;
+		else
+			return $score;
 	}
 
 	public function claim($user_id = null, $generated = false)
