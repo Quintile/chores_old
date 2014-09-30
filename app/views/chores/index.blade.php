@@ -15,8 +15,6 @@
 							<th>Name</th>
 							<th>Last Done</th>
 							<th>Score</th>
-							<th>Priority</th>
-							<th>Importance</th>
 							<th>Claimed</th>
 							<th style="width: 106px"></th>
 						</tr>
@@ -28,8 +26,6 @@
 							<td>{{$c->name}}</td>
 							<td>{{$c->daysString()}}</td>
 							<td class="number">{{$c->score()}}</td>
-							<td class="number">{{$c->priority()}}</td>
-							<td>{{$c->importance()}}</td>
 							@if($c->doneToday())
 								<td class="chore-claimed-name">{{$c->lastDoneBy()}} (Done)</td>
 							@elseif($c->claimer())
@@ -38,17 +34,7 @@
 								<td><a href="{{\URL::route('chores.claim', $c->id)}}" class="button secondary tiny right">Claim This Chore</a></td>
 							@endif
 							<td>
-								<button href="#" data-dropdown="drop-chore-{{$c->id}}" aria-controls="drop-chore-{{$c->id}}" aria-expanded="false" class="button secondary dropdown tiny right">Options</button>
-								<ul id="drop-chore-{{$c->id}}" data-dropdown-content class="f-dropdown" aria-hidden="true" tabindex="-1">
-									<li><a href="{{\URL::route('chores.claim', $c->id)}}">Claim This Chore</a></li>
-									<li><a href="{{\URL::route('chores.finish', $c->id)}}">
-										@if($c->claimer() == \Auth::user()->name)
-											Finish This Chore
-										@else
-											Claim & Finish This Chore
-										@endif
-									</a></li>
-								</ul>
+								@include('layouts.chores.options')
 							</td>
 						</tr>
 						@endforeach

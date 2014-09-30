@@ -80,4 +80,16 @@ class Household extends Eloquent
 
 		return $choreArray;
 	}
+
+	public function ranks()
+	{
+		$users = $this->users;
+		$userArray = array();
+		foreach($users as $u)
+		{
+			$userArray[] = $u;
+		}
+		usort($userArray, 'User::scoreCompare');
+		return $userArray;
+	}
 }

@@ -1,7 +1,7 @@
 <ul class="side-nav">
 	
 	<li class="heading">Home</li>
-	<li><a href="{{\URL::route('home')}}">News</a>
+	<li><a href="{{\URL::route('home')}}">News</a></li>
 
 	@if(\Auth::check())
     <li class="heading">Chores</li>
@@ -18,5 +18,10 @@
 
   	<li class="heading">System</li>
   	<li><a href="{{\URL::route('preferences')}}">Preferences</a></li>
+
+    <li class="heading">Ranks</li>
+    @foreach(\Auth::user()->activeHousehold()->ranks() as $index => $user)
+        <li><a href="#">{{$index+1}}. {{$user->name}} ({{$user->score()}})</a></li>
+    @endforeach
 	@endif
 </ul>

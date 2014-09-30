@@ -388,6 +388,15 @@ table.chore-table tr.chore-claim {
 	display: block;
 }
 
+table.chore-table a.disabled {
+	color: #CCC;
+}
+
+table.chore-table a.disabled:hover {
+	background-color: #FFF;
+	cursor: not-allowed;
+}
+
 /* ALERTS */
 #alert {
 	position: fixed;

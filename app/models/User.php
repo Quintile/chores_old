@@ -130,7 +130,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function score()
 	{
 		$score = 0;
-		$assignments = $this->assignments()->whereNotNull('completed_at')->where('created_at', '>', with(new \DateTime('Last Sunday'))->format('Y-m-d'))->get();
+		$assignments = $this->assignments()->whereNotNull('completed_at')->where('created_at', '>', with(new \DateTime('Last Saturday'))->format('Y-m-d'))->where('created_at', '<=', with(new \DateTime('This Saturday'))->format('Y-m-d'))->get();
 		foreach($assignments as $ass)
 			$score += $ass->score;
 	
@@ -145,4 +145,25 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 			$score += $ass->score;
 		return $score;
 	}
+
+	public function rank()
+	{
+		$ranks = $this->activeHousehold()->ranks();
+		
+		foreach($ranks as $index => $r)
+		{
+			if($r->id == $this->id)
+				return $index + 1;
+		}
+
+		return null;
+	}
+
+	public static function scoreCompare($a, $b)
+	{
+		if($a->score() == $b->score())
+			return 0;
+		return ($a->score() > $b->score()) ? -1 : 1;
+	}
+
 }

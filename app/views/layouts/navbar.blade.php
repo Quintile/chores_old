@@ -11,7 +11,7 @@
   	@if(\Auth::check())
     <ul class="right">
       <li class="has-dropdown user-menu">
-        <a href="#">{{\Auth::user()->name}}</a>
+        <a href="#">({{\Auth::user()->rank()}}) {{\Auth::user()->name}}</a>
         <ul class="dropdown">
           <li><a href="{{\URL::route('logout')}}">Logout</a></li>
         </ul>
@@ -22,6 +22,7 @@
   </section>
 </nav>
 
+@if(\Auth::check())
 <script type="text/javascript">
 
      var week = '{{number_format(\Auth::user()->score())}}';
@@ -32,39 +33,32 @@
     function scoreLoop(){
 
         setTimeout(function(){
-            if(flag)
-        {
+          if(flag)
+          {
             timeout = 5000;
             $('.user-score').fadeOut(1000, function(){
-                $('.user-score').text('All Time: '+all);
-                flag = false;
-                $('.user-score').fadeIn(500, scoreLoop);
-            });
+                  $('.user-score').text('All Time: '+all);
+                  flag = false;
+                  $('.user-score').fadeIn(500, scoreLoop);
+          });
+          }
+          else
+          {
+              timeout = 10000;
+              $('.user-score').fadeOut(1000, function(){
+                  $('.user-score').text('Week: '+week);
+                  flag = true;
+                  $('.user-score').fadeIn(500, scoreLoop);
+              });
+              
+          }
            
-        }
-        else
-        {
-            timeout = 10000;
-            $('.user-score').fadeOut(1000, function(){
-                $('.user-score').text('Week: '+week);
-                flag = true;
-                $('.user-score').fadeIn(500, scoreLoop);
-            });
-            
-        }
-           
-    }, timeout);
-
-        
-
+        }, timeout);
     }
 
     $(document).ready(function(){
-
-     
-
          scoreLoop();
-    
     });
 
 </script>
+@endif
