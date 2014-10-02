@@ -11,7 +11,7 @@
 		$("#alert").fadeIn(800);
 		setTimeout(function(){
 			$("#alert").fadeOut(2500);
-		}, 2000);
+		}, 5000);
 	});
 
 	</script>
