@@ -24,10 +24,7 @@
 		</div>
 		
 		<script src="{{asset('foundation/js/foundation.min.js')}}"></script>
-		<script>
-			$(document).foundation();
-		</script>
-
+		
 		<!--Check for invites -->
 		@if(\Auth::check())
 			@include('modals.invite', array('invite' => \Auth::user()->unreadInvites()->first()))
@@ -37,5 +34,9 @@
 		<!-- Individual yield modals -->
 		@yield('modals')
 		@include('layouts.alerts')
+
+		<script>
+			$(document).foundation();
+		</script>
 	</body>
 </html>

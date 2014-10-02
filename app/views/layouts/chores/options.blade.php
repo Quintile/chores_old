@@ -17,9 +17,10 @@
 		</a>
 	</li>
 	<li>
-		<a>Give Chore to Other User</a>
+		<a data-chore-id="{{$c->id}}" class="chore-credit">Give Credit To Another User</a>
 	</li>
 	<li>
 		<a>View Details</a>
 	</li>
 </ul>
+

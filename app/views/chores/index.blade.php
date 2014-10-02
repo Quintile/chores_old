@@ -21,11 +21,11 @@
 					</thead>
 					<tbody>
 						@foreach($r->chores as $c)
-						<tr class="chore @if($c->days() === '0') finished @elseif($c->claimer() == \Auth::user()->name) self-claimed @elseif($c->claimer()) other-claimed @endif">
+						<tr class="chore @if($c->days() === '0') finished @elseif($c->claimer() == \Auth::user()->name) self-claimed @elseif($c->claimer()) other-claimed @endif" data-chore-id="{{$c->id}}">
 							<td class="chore-status"><span class="chore-alert {{$c->alertStatus()}}"></span></td>
-							<td>{{$c->name}}</td>
-							<td>{{$c->daysString()}}</td>
-							<td class="number">{{$c->score()}}</td>
+							<td data-property="chore-name">{{$c->name}}</td>
+							<td data-property="chore-days">{{$c->daysString()}}</td>
+							<td data-property="chore-score" class="number">{{$c->score()}}</td>
 							@if($c->doneToday())
 								<td class="chore-claimed-name">{{$c->lastDoneBy()}} (Done)</td>
 							@elseif($c->claimer())
@@ -52,4 +52,7 @@
 
 </script>
 
+@stop
+@section('modals')
+@include('modals.credit')
 @stop

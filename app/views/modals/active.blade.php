@@ -33,5 +33,6 @@ if($membership)
 	}
 
 	$('#modal-active').foundation('reveal', 'open');
+	
 </script>
 @endif
